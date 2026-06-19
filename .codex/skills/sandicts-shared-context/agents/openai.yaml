@@ -1,0 +1,3 @@
+name: sandicts-shared-context
+short_description: Route Codex to shared Sandicts product and business docs.
+default_prompt: Use the Sandicts shared context before changing product rules, entity naming, MVP scope, or cross-app documentation.

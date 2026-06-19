@@ -1,0 +1,78 @@
+---
+title: Sandicts Shared AI Context Index
+doc-type: ai-routing-index
+role: routing-index
+priority: high
+canonical: docs/ai/index.md
+scope: ai-routing, product, business-rules, shared-docs, frontend-backend-alignment
+read-when:
+  - starting shared Sandicts product or business-rule work
+  - deciding which shared docs a backend or frontend task needs
+  - auditing shared documentation for Codex token efficiency
+do-not-read-when:
+  - changing only backend architecture, tests, logging, config, or CI
+  - changing only frontend components, styling, routing internals, or local state
+---
+
+# Sandicts Shared AI Context Index
+
+Use this file as the shared documentation router. Read the smallest useful set
+of files for the current task.
+
+## Reading Rules
+
+- Start here, then open only docs whose `read-when` entries match the task.
+- Prefer concise source-of-truth docs before long working drafts.
+- Treat `docs/product/sandicts-mvp-functional-spec.md` as on-demand detail, not
+  default context.
+- Keep backend implementation patterns in the backend repo.
+- Keep frontend implementation, screen, and component rules in the frontend repo.
+- Do not duplicate product rules in app repositories; link back here.
+
+## Document Catalog
+
+| Document | Role |
+| --- | --- |
+| [`docs/product/sandicts-product-context.md`](../product/sandicts-product-context.md) | Product context and core marketplace direction |
+| [`docs/product/sandicts-mvp-scope.md`](../product/sandicts-mvp-scope.md) | Approved MVP scope and explicit exclusions |
+| [`docs/business-rules/sandicts-business-rules.md`](../business-rules/sandicts-business-rules.md) | Operational business rules shared by frontend and backend |
+| [`docs/glossary/domain-glossary.md`](../glossary/domain-glossary.md) | Canonical entity names and domain vocabulary |
+| [`docs/product/sandicts-v2-backlog.md`](../product/sandicts-v2-backlog.md) | V2 and future backlog boundaries |
+| [`docs/product/sandicts-scope-checklist.md`](../product/sandicts-scope-checklist.md) | Working scope checklist; read only for scope classification |
+| [`docs/product/sandicts-jira-planning-workflow.md`](../product/sandicts-jira-planning-workflow.md) | Jira roadmap and issue-writing workflow |
+| [`docs/product/sandicts-mvp-functional-spec.md`](../product/sandicts-mvp-functional-spec.md) | Detailed MVP functional spec; read on demand |
+| [`docs/decisions/shared-documentation-strategy.md`](../decisions/shared-documentation-strategy.md) | Ownership decision for shared vs app-specific docs |
+
+## Common Reading Paths
+
+For a product scope decision, read:
+
+1. `docs/product/sandicts-product-context.md`
+2. `docs/product/sandicts-mvp-scope.md`
+3. `docs/business-rules/sandicts-business-rules.md`
+4. `docs/product/sandicts-v2-backlog.md` only when classifying V2/future work
+
+For a business-rule change, read:
+
+1. `docs/business-rules/sandicts-business-rules.md`
+2. `docs/product/sandicts-mvp-scope.md`
+3. app-specific API or UI docs only after the shared rule is clear
+
+For entity naming, read:
+
+1. `docs/glossary/domain-glossary.md`
+2. `docs/business-rules/sandicts-business-rules.md` only when behavior is also involved
+
+For Jira planning, read:
+
+1. `docs/product/sandicts-jira-planning-workflow.md`
+2. `docs/product/sandicts-mvp-scope.md`
+3. `docs/product/sandicts-v2-backlog.md` only for non-MVP boundaries
+
+For frontend implementation, do not load all shared docs. Start in the frontend
+repo and read shared docs only for product, scope, entity, or business-rule
+questions.
+
+For backend implementation, do not load all shared docs. Start in the backend
+repo and read shared docs only for product, scope, entity, or business-rule
+questions.
