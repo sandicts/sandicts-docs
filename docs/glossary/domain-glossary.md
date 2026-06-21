@@ -65,8 +65,8 @@ keep stable IDs internally.
 Recommended public/management route direction:
 
 - players: `/players/:playerSlug`
-- organizations: `/organizationss/:organizationSlug`
-- Organization management: `/organizationss/:organizationSlug/manage`
+- organizations: `/organizations/:organizationSlug`
+- Organization management: `/organizations/:organizationSlug/manage`
 - academies: `/academies/:academySlug`
 - academy management: `/academies/:academySlug/manage`
 

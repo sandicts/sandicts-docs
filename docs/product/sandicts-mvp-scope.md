@@ -120,7 +120,7 @@ Rules:
 - Organization staff can be scoped to assigned units/courts
 - cross-Organization access must be forbidden
 - inactive courts cannot be reserved
-- Organization management routes use `/organizationss/:organizationSlug`
+- Organization management routes use `/organizations/:organizationSlug`
 - court routes use court slugs in user-facing URLs
 
 Not in MVP:

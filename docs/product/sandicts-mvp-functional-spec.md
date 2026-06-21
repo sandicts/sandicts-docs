@@ -591,14 +591,14 @@ Rascunho de rotas:
 - `/app/open-matches`
 - `/app/open-matches/[matchId]`
 - `/app/open-matches/new`
-- `/organizationss/[organizationSlug]/manage`
-- `/organizationss/[organizationSlug]/manage/profile`
-- `/organizationss/[organizationSlug]/manage/courts`
-- `/organizationss/[organizationSlug]/manage/courts/new`
-- `/organizationss/[organizationSlug]/manage/availability`
-- `/organizationss/[organizationSlug]/manage/agenda`
-- `/organizationss/[organizationSlug]/manage/reservations/[reservationId]`
-- `/organizationss/[organizationSlug]/manage/payments`
+- `/organizations/[organizationSlug]/manage`
+- `/organizations/[organizationSlug]/manage/profile`
+- `/organizations/[organizationSlug]/manage/courts`
+- `/organizations/[organizationSlug]/manage/courts/new`
+- `/organizations/[organizationSlug]/manage/availability`
+- `/organizations/[organizationSlug]/manage/agenda`
+- `/organizations/[organizationSlug]/manage/reservations/[reservationId]`
+- `/organizations/[organizationSlug]/manage/payments`
 - `/academies/[academySlug]/manage`
 - `/admin-app`
 
@@ -840,9 +840,9 @@ Decisao aberta:
 
 Possiveis endpoints:
 
-- `GET /organizationss/me`
-- `POST /organizationss`
-- `PATCH /organizationss/me`
+- `GET /organizations/me`
+- `POST /organizations`
+- `PATCH /organizations/me`
 
 ### Regras De Negocio
 
