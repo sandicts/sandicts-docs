@@ -17,8 +17,12 @@ task. This skill does not own backend or frontend implementation rules.
 3. Prefer concise source-of-truth docs before long working drafts.
 4. Use `docs/glossary/domain-glossary.md` for entity names.
 5. Use `docs/business-rules/sandicts-business-rules.md` for domain behavior.
-6. Use app repository docs for backend-only or frontend-only implementation.
-7. If shared docs and app docs disagree about product rules, surface the
+6. For shared docs commits, PR titles, PR bodies, validation, or Jira delivery
+   summaries, read `docs/ai/task-finalization-workflow.md`,
+   `docs/ai/pull-request-standard.md`, and
+   `.codex/skills/jira-pr-commit-writer/SKILL.md`.
+7. Use app repository docs for backend-only or frontend-only implementation.
+8. If shared docs and app docs disagree about product rules, surface the
    conflict and update the shared source of truth when the rule changes.
 
 ## Boundaries
