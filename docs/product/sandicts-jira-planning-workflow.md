@@ -10,6 +10,8 @@ related:
   - docs/product/sandicts-v2-backlog.md
   - docs/product/sandicts-scope-checklist.md
   - docs/business-rules/sandicts-business-rules.md
+  - docs/ai/pull-request-standard.md
+  - docs/ai/task-finalization-workflow.md
   - sandicts/reactjs-sandicts-web:docs/frontend/sandicts-frontend-planning.md
   - sandicts/reactjs-sandicts-web:docs/frontend/sandicts-frontend-tech-decisions.md
   - sandicts/reactjs-sandicts-web:docs/frontend/sandicts-mvp-delivery-roadmap.md
@@ -667,6 +669,19 @@ An implementation issue is done when:
   changed
 - the PR description and commit message reflect the actual change
 - the Jira issue has an accurate status
+
+Delivery PR standard:
+
+- follow `docs/ai/pull-request-standard.md` for PR titles, PR bodies,
+  validation reporting, and no-blank-body rules
+- every Sandicts PR title starts with the primary Jira key:
+  `[KAN-123] <type>(<scope>): <short summary>`
+- use the same PR body section structure in frontend, backend, and shared docs
+  repositories
+- for `sandicts-docs`, validation evidence is normally `git diff --check` plus
+  manual inspection of changed docs, links, and skill metadata; do not mark
+  lint, typecheck, tests, build, or dependency audit complete unless those
+  commands exist and actually ran
 
 ## Backlog Planning Cadence
 
