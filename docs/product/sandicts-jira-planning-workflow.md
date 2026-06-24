@@ -678,7 +678,7 @@ Delivery PR standard:
   `[KAN-123] <type>(<scope>): <short summary>`
 - use the same PR body section structure in frontend, backend, and shared docs
   repositories
-- for `sandicts-docs`, docs-only validation is normally `git diff --check` plus
+- for `sandicts-docs`, validation evidence is normally `git diff --check` plus
   manual inspection of changed docs, links, and skill metadata; do not mark
   lint, typecheck, tests, build, or dependency audit complete unless those
   commands exist and actually ran

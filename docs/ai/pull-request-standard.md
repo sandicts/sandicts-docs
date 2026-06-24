@@ -98,7 +98,6 @@ For docs-only or setup work, describe why the repository needed this change.
 - [ ] tests (CI: Test)
 - [ ] build (CI: Build)
 - [ ] dependency audit (CI: Dependency audit)
-- [ ] docs-only validation (`git diff --check`)
 - [ ] manual validation completed
 
 ## Notes
@@ -118,6 +117,8 @@ Rules:
 - preserve the headings and order from the local `.github/pull_request_template.md`
 - keep skipped validation and repo-specific rationale under `Validation` or
   `Notes`
+- for docs-only changes, mention `git diff --check` under
+  `Known gaps or skipped validation` instead of adding a custom checkbox
 - update the PR body if the scope changes after opening the PR
 
 ## Repository Validation
