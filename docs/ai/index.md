@@ -43,6 +43,7 @@ of files for the current task.
 | [`docs/product/sandicts-jira-planning-workflow.md`](../product/sandicts-jira-planning-workflow.md) | Jira roadmap and issue-writing workflow |
 | [`docs/product/sandicts-mvp-functional-spec.md`](../product/sandicts-mvp-functional-spec.md) | Detailed MVP functional spec; read on demand |
 | [`docs/decisions/shared-documentation-strategy.md`](../decisions/shared-documentation-strategy.md) | Ownership decision for shared vs app-specific docs |
+| [`docs/decisions/api-contract-governance.md`](../decisions/api-contract-governance.md) | Cross-app API compatibility and delivery rules |
 | [`docs/ai/pull-request-standard.md`](pull-request-standard.md) | Shared PR title, body, validation, and no-blank-body standard |
 | [`docs/ai/task-finalization-workflow.md`](task-finalization-workflow.md) | Shared docs commit, PR, validation, and Jira review workflow |
 
@@ -60,6 +61,13 @@ For a business-rule change, read:
 1. `docs/business-rules/sandicts-business-rules.md`
 2. `docs/product/sandicts-mvp-scope.md`
 3. app-specific API or UI docs only after the shared rule is clear
+
+For an API contract or compatibility change, read:
+
+1. `docs/decisions/api-contract-governance.md`
+2. `docs/decisions/shared-documentation-strategy.md`
+3. the backend semantic API contract and generated OpenAPI
+4. frontend API integration docs when client behavior changes
 
 For entity naming, read:
 

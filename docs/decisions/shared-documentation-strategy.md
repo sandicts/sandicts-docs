@@ -6,6 +6,7 @@ priority: high
 canonical: docs/decisions/shared-documentation-strategy.md
 related:
   - docs/ai/index.md
+  - docs/decisions/api-contract-governance.md
   - docs/product/sandicts-product-context.md
   - docs/product/sandicts-mvp-scope.md
   - docs/business-rules/sandicts-business-rules.md
@@ -95,6 +96,10 @@ API contracts should come from backend implementation whenever possible:
 
 Shared docs can describe expected product behavior, but generated contracts own
 exact request/response shapes.
+
+Cross-app compatibility, deprecation, and delivery expectations live in
+`docs/decisions/api-contract-governance.md`. Exact statuses, fields, and codes
+remain backend-owned and generated into frontend adapters.
 
 ## Local Workspace Rule
 
