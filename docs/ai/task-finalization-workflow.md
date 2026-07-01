@@ -11,7 +11,7 @@ related:
   - docs/product/sandicts-jira-planning-workflow.md
 scope: git, github, jira, commits, pull-requests, validation, shared-docs
 read-when:
-  - finishing a shared docs Jira task
+  - finishing shared docs work with or without a Jira task
   - preparing commits for shared product, business-rule, glossary, or process docs
   - opening or updating a pull request in sandicts-docs
   - writing a PR title, PR description, commit message, or delivery summary
@@ -38,10 +38,16 @@ title, body, validation, and no-blank-body rules.
 
 Follow `docs/ai/pull-request-standard.md`.
 
-Use the Jira key first:
+When a Jira task exists, use the Jira key first:
 
 ```text
 [KAN-123] <type>(<scope>): <short summary>
+```
+
+When the change is documentation-only and no Jira task exists, use:
+
+```text
+[NO-JIRA] docs(<scope>): <short summary>
 ```
 
 Examples:
@@ -50,17 +56,27 @@ Examples:
 [KAN-120] docs(process): standardize PR delivery format
 [KAN-107] docs(planning): organize MVP docs and AI routing
 [KAN-65] docs(product): document navigation context model
+[NO-JIRA] docs(product): define academy plan rules
+[NO-JIRA] docs(process): define documentation granularity
 ```
 
 Rules:
 
-- The primary Jira key must be the first characters in the PR title.
+- When a Jira task exists, its primary key must be the first characters in the
+  PR title.
+- `[NO-JIRA]` is allowed only in `sandicts/sandicts-docs`, when no Jira task
+  exists and the PR contains documentation or documentation-routing metadata
+  only.
+- Do not use `[NO-JIRA]` for source code, runtime configuration, database
+  schema, infrastructure, or implementation work.
+- If a Jira task is created or discovered before merge, rename the PR to use
+  the Jira key and update its Notes.
 - Never open or leave a Sandicts PR titled with `[codex]`, only a branch name,
-  or no Jira key.
+  or without an approved tracking prefix.
 - If a publishing helper or GitHub UI proposes a different title, rewrite it to
   the Sandicts format before creating the PR.
-- Use the same title format in the shared docs, frontend, and backend
-  repositories.
+- Use the Jira-backed title format in every Sandicts repository; the
+  `[NO-JIRA]` exception is exclusive to `sandicts-docs`.
 - If a PR includes multiple Jira tasks, put the primary key in the title and
   list related Jira keys in the PR body.
 
@@ -74,6 +90,8 @@ Rules:
 - Keep the template headings and order unchanged.
 - Describe only the current PR changes, not the full parent epic.
 - Include the primary Jira key and related Jira keys under `Notes`.
+- For `[NO-JIRA]`, mark Jira fields as not applicable and record that the PR is
+  documentation-only under `Tracking exception`.
 - Mark validation checkboxes only for commands or checks that actually ran.
 - Mention known gaps, skipped validations, or docs-only rationale explicitly.
 - Keep the same PR body section structure across Sandicts repositories.
@@ -100,7 +118,8 @@ Rules:
 
 - Use imperative mood.
 - Keep the first line under 72 characters when practical.
-- The PR title carries the Jira key by default.
+- The PR title carries the Jira key by default or `[NO-JIRA]` for the approved
+  documentation-only exception.
 - Do not include a Jira key in commits unless the user explicitly asks for it
   or the commit will be consumed outside PR context.
 
@@ -126,9 +145,12 @@ For backend repository changes, follow
 
 ## Jira Status Rule
 
-After the pull request is opened or updated for delivered work:
+When the work has a Jira task, after the pull request is opened or updated:
 
 1. add a Jira comment with PR link, changed scope, validation, and known gaps
 2. move the delivered Jira issue to `In Review`
 3. do not move the issue to `Concluido`; that happens only after review and
    merge are accepted
+
+For `[NO-JIRA]` documentation-only work, skip Jira comments and transitions and
+record `Jira status: not applicable` in the PR body.

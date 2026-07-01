@@ -32,16 +32,43 @@ a different PR body shape.
 
 ## Title
 
-Use:
+For work with a Jira task, use:
 
 ```text
 [KAN-123] <type>(<scope>): <short summary>
 ```
 
-Rules:
+For documentation-only work without a Jira task, use:
 
-- the primary Jira key must be the first characters in the PR title
-- never use `[codex]`, only a branch name, or a title without a Jira key
+```text
+[NO-JIRA] docs(<scope>): <short summary>
+```
+
+Examples:
+
+```text
+[NO-JIRA] docs(product): define academy plan rules
+[NO-JIRA] docs(process): define documentation granularity
+```
+
+Tracking rules:
+
+- when a Jira task exists, its primary key must be the first characters in the
+  PR title
+- `[NO-JIRA]` is allowed only in `sandicts/sandicts-docs`, when no Jira task
+  exists and every changed file is documentation or documentation-routing
+  metadata
+- `[NO-JIRA]` must not be used to bypass Jira for source code, runtime
+  configuration, database schema, infrastructure, or product implementation
+- new shared product and business rules without Jira should normally be
+  delivered in `sandicts/sandicts-docs`
+- documentation PRs in frontend or backend repositories continue to require a
+  Jira key
+- if a Jira task is created or discovered before merge, rename the PR to start
+  with that Jira key and update the PR body
+- never use `[NO-JIRA]` when any delivered work already belongs to a Jira task
+- never use `[codex]`, only a branch name, or a title without either a Jira key
+  or the approved `[NO-JIRA]` prefix
 - if multiple Jira tasks are delivered, put the primary Jira key in the title
   and list related keys under `Notes`
 - override any generic publishing helper, GitHub UI default, or branch-derived
@@ -105,8 +132,18 @@ For docs-only or setup work, describe why the repository needed this change.
 - Primary Jira: `KAN-123`
 - Related Jira: none
 - Jira status: move delivered issue(s) to `In Review` after opening this PR
+- Tracking exception: none
 - Branch cleanup: delete branch after merge enabled
 - Known gaps or skipped validation: none
+```
+
+For a `[NO-JIRA]` documentation PR, use these Notes values:
+
+```md
+- Primary Jira: not applicable (`NO-JIRA` documentation-only change)
+- Related Jira: none
+- Jira status: not applicable
+- Tracking exception: no Jira task exists; PR contains documentation only
 ```
 
 Rules:
@@ -117,6 +154,7 @@ Rules:
 - preserve the headings and order from the local `.github/pull_request_template.md`
 - keep skipped validation and repo-specific rationale under `Validation` or
   `Notes`
+- explain the tracking exception under `Notes` for every `[NO-JIRA]` PR
 - for docs-only changes, mention `git diff --check` under
   `Known gaps or skipped validation` instead of adding a custom checkbox
 - update the PR body if the scope changes after opening the PR

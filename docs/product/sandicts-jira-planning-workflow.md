@@ -7,6 +7,8 @@ canonical: docs/product/sandicts-jira-planning-workflow.md
 related:
   - docs/product/sandicts-product-context.md
   - docs/product/sandicts-mvp-scope.md
+  - docs/product/sandicts-academy-plan-model.md
+  - docs/product/sandicts-player-skill-allocation-model.md
   - docs/product/sandicts-v2-backlog.md
   - docs/product/sandicts-scope-checklist.md
   - docs/business-rules/sandicts-business-rules.md
@@ -674,8 +676,11 @@ Delivery PR standard:
 
 - follow `docs/ai/pull-request-standard.md` for PR titles, PR bodies,
   validation reporting, and no-blank-body rules
-- every Sandicts PR title starts with the primary Jira key:
+- Jira-backed PR titles start with the primary Jira key:
   `[KAN-123] <type>(<scope>): <short summary>`
+- `sandicts-docs` documentation-only PRs without a Jira task use:
+  `[NO-JIRA] docs(<scope>): <short summary>`; this exception cannot be used for
+  implementation work
 - use the same PR body section structure in frontend, backend, and shared docs
   repositories
 - for `sandicts-docs`, validation evidence is normally `git diff --check` plus
@@ -868,28 +873,30 @@ MVP rules:
 - simple level is only a matchmaking and filtering attribute
 - public profile is V2
 - player photo, bio, nationality, and side of game are V2
-- player evolution, overall, cards, and fundamentals are V2
+- player evolution and sport-specific skill allocation are V2
 
 Why after auth:
 
 - player profile depends on account identity
 - reservations and open matches need a player reference
 
-### Phase 3: Organization Onboarding
+### Phase 3: Organization And Academy Onboarding
 
 Purpose:
 
-- let the supply side exist before courts, availability, and reservations
+- let Organization and Academy supply-side contexts exist before their
+  operational modules
 
 Suggested Epic:
 
-- `[MVP] Organization Onboarding`
+- `[MVP] Organization and Academy Onboarding`
 
 Suggested Stories:
 
 - `[Organizations] Organization creates an account`
 - `[Organizations] Organization creates a venue profile`
 - `[Organizations] Organization edits venue profile details`
+- `[Academies] Academy creates an independent profile`
 
 Suggested Tasks:
 
@@ -897,8 +904,13 @@ Suggested Tasks:
 - `[API] Expose Organization profile endpoints`
 - `[Frontend] Build Organization dashboard shell`
 - `[Frontend] Build Organization profile form`
+- `[Backend] Model Academy ownership and access scope`
+- `[API] Expose Academy profile endpoints`
+- `[Frontend] Build Academy dashboard shell and profile form`
 - `[E2E] Validate Organization profile setup`
+- `[E2E] Validate Academy profile setup`
 - `[Security] Prevent cross-Organization data access`
+- `[Security] Prevent cross-Academy data access`
 - `[Tests] Cover Organization access boundaries`
 
 MVP rules:
@@ -906,14 +918,15 @@ MVP rules:
 - `Organization` is the single concept for arena, club, venue, or event
   organizer that manages courts or reservations
 - `Academy` is the separate concept for training, classes, coaches, students,
-  and membership flows
+  and plan flows
 - cross-Organization access must be forbidden
+- cross-Academy access must be forbidden
 - Admin App users should not be introduced until a real operational flow needs them
 
 Why after player profile:
 
 - authentication and identity rules should be stable before adding Organization
-  authorization boundaries
+  and Academy authorization boundaries
 
 ### Phase 4: Court Management
 
@@ -1109,7 +1122,54 @@ Why after reservations:
 
 - MVP payments are attached to reservation operations first
 
-### Phase 9: Open Matches
+### Phase 9: Academy Plans
+
+Purpose:
+
+- let Academies represent real commercial offers and manually control Player
+  access without introducing a full school ERP
+
+Suggested Epic:
+
+- `[MVP] Academy Plans`
+
+Suggested Stories:
+
+- `[Academy Plans] Academy configures a plan`
+- `[Academy Plans] Academy sells or grants plan access to a Player`
+- `[Academy Plans] Academy registers and corrects a plan use`
+- `[Academy Plans] Player views plan validity and remaining uses`
+
+Suggested Tasks:
+
+- `[Backend] Model Academy plan templates and access snapshots`
+- `[Backend] Enforce calendar-day validity and weekly usage windows`
+- `[Backend] Record auditable usage and corrections`
+- `[API] Expose Academy plan and access endpoints`
+- `[Frontend] Build Academy plan catalog and form`
+- `[Frontend] Build plan access and usage management`
+- `[Frontend] Show Player plan status and balances`
+- `[E2E] Validate plan expiration and usage limits`
+- `[Security] Prevent cross-Academy plan access`
+
+MVP rules:
+
+- plan name does not determine behavior
+- validity is configured in calendar days
+- total and weekly use limits are optional and composable
+- each Player access snapshots the plan rules at creation
+- plan use and payment updates are manual and auditable
+- full classes, coaches, recurring billing, and external student CRM are V2
+
+Detailed product rules:
+
+- `docs/product/sandicts-academy-plan-model.md`
+
+Why after manual payments:
+
+- plan access can reference the same explicit manual Payment state
+
+### Phase 10: Open Matches
 
 Purpose:
 
@@ -1152,7 +1212,7 @@ Why after reservations:
 - open matches can reference Organization/court or a simple place, but benefit from
   the same player and location vocabulary created earlier
 
-### Phase 10: MVP Hardening
+### Phase 11: MVP Hardening
 
 Purpose:
 
@@ -1227,12 +1287,13 @@ explicitly accepts backend-only completion for that stage.
 | ------------------ | ----------------------------------------------- | --------------------------------------------------- |
 | Auth               | App shell, auth screen, session state           | Sign in, preserve or refresh session, sign out      |
 | Player Profile     | Profile onboarding UI                           | Create/update profile, main sport, simple level     |
-| Organization Onboarding | Organization dashboard shell and profile form        | Create/update Organization profile                       |
+| Organization/Academy Onboarding | Organization and Academy dashboard/profile forms | Create/update each independent context               |
 | Court Management   | Court list, detail, creation, pricing, rules    | Create court and see it in Organization court list       |
 | Availability       | Calendar and slot editor                        | Publish slot and expose it to discovery data        |
 | Discovery          | Player discovery and filters                    | Filter courts by sport, availability, and price     |
 | Reservations       | Request flow and Organization reservation management | Request, confirm, cancel, and block duplicates      |
 | Manual Payments    | Pending payments and payment status controls    | Update payment state and reflect it in reservations |
+| Academy Plans      | Plan catalog, access, usage, and Player status  | Enforce validity and usage without cross-Academy access |
 | Open Matches       | Match list, detail, create, join, leave         | Create, join, leave, and block invalid joins        |
 | MVP Hardening      | Responsive review and smoke suite               | Critical path works end to end                      |
 
@@ -1251,12 +1312,13 @@ Recommended dependency order:
 Auth
   -> Frontend App Foundation
   -> Player Profile
-  -> Organization Onboarding
+  -> Organization And Academy Onboarding
   -> Court Management
   -> Availability
   -> Discovery
   -> Reservations
   -> Manual Payments
+  -> Academy Plans
   -> Open Matches
   -> MVP Hardening
 ```
@@ -1265,10 +1327,12 @@ Important dependency notes:
 
 - reservations require players, Organizations, courts, and availability
 - frontend app foundation should begin after auth contracts stabilize
-- payments should start with reservations before memberships or tournaments
+- payments should start with reservations, then support Academy plan access
+- Academy plans require Player, Academy, and manual Payment foundations
 - open matches require player identity and simple level
 - tournaments are V2 and should not block MVP reservations or open matches
-- B2B Academy management is V2 and should not block Organization/court basics
+- full B2B Academy management remains V2; the MVP includes only plan catalog,
+  manual Player access, expiration, and manual usage
 
 ## V2 And Future Backlog Rules
 

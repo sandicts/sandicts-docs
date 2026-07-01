@@ -36,6 +36,8 @@ of files for the current task.
 | --- | --- |
 | [`docs/product/sandicts-product-context.md`](../product/sandicts-product-context.md) | Product context and core marketplace direction |
 | [`docs/product/sandicts-mvp-scope.md`](../product/sandicts-mvp-scope.md) | Approved MVP scope and explicit exclusions |
+| [`docs/product/sandicts-academy-plan-model.md`](../product/sandicts-academy-plan-model.md) | MVP Academy plan configuration, access, usage, and expiration |
+| [`docs/product/sandicts-player-skill-allocation-model.md`](../product/sandicts-player-skill-allocation-model.md) | V2 level budgets and sport-specific skill allocation without overall |
 | [`docs/business-rules/sandicts-business-rules.md`](../business-rules/sandicts-business-rules.md) | Operational business rules shared by frontend and backend |
 | [`docs/glossary/domain-glossary.md`](../glossary/domain-glossary.md) | Canonical entity names and domain vocabulary |
 | [`docs/product/sandicts-v2-backlog.md`](../product/sandicts-v2-backlog.md) | V2 and future backlog boundaries |
@@ -61,6 +63,18 @@ For a business-rule change, read:
 1. `docs/business-rules/sandicts-business-rules.md`
 2. `docs/product/sandicts-mvp-scope.md`
 3. app-specific API or UI docs only after the shared rule is clear
+
+For Academy plans, read:
+
+1. `docs/product/sandicts-academy-plan-model.md`
+2. `docs/product/sandicts-mvp-scope.md`
+3. `docs/business-rules/sandicts-business-rules.md`
+
+For V2 player skill allocation, read:
+
+1. `docs/product/sandicts-player-skill-allocation-model.md`
+2. `docs/product/sandicts-v2-backlog.md`
+3. `docs/business-rules/sandicts-business-rules.md`
 
 For an API contract or compatibility change, read:
 
