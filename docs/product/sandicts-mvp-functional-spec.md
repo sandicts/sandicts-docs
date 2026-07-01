@@ -7,6 +7,7 @@ canonical: docs/product/sandicts-mvp-functional-spec.md
 related:
   - docs/product/sandicts-mvp-scope.md
   - docs/product/sandicts-product-context.md
+  - docs/product/sandicts-academy-plan-model.md
   - docs/business-rules/sandicts-business-rules.md
   - sandicts/reactjs-sandicts-web:docs/frontend/sandicts-frontend-tech-decisions.md
   - sandicts/reactjs-sandicts-web:docs/frontend/sandicts-mvp-delivery-roadmap.md
@@ -71,6 +72,7 @@ O MVP deve provar que:
 - jogadores conseguem descobrir quadras disponiveis
 - jogadores conseguem solicitar reservas
 - Organizations conseguem confirmar e gerenciar reservas
+- Academies conseguem configurar planos e controlar acessos manualmente
 - status de pagamento manual consegue ser acompanhado
 - jogadores conseguem criar e entrar em partidas abertas
 
@@ -81,7 +83,7 @@ O MVP nao deve tentar provar:
 - torneios
 - integracao com gateway de pagamento
 - geolocalizacao e busca por proximidade
-- gestao completa de Academy, coaches, alunos e planos
+- gestao completa de Academy, coaches, aulas e CRM de alunos
 - rede social
 - comportamento Web3/token
 
@@ -108,14 +110,15 @@ API.
 1. Autenticacao e acesso a conta
 2. Fundacao do app frontend
 3. Perfil do jogador
-4. Onboarding de Organization e contexto Academy inicial
+4. Onboarding de Organization e Academy
 5. Gestao de quadras
 6. Calendario de disponibilidade
 7. Descoberta de quadras
 8. Reservas
 9. Pagamentos manuais
-10. Partidas abertas
-11. Preparacao para lancamento
+10. Planos de Academy
+11. Partidas abertas
+12. Preparacao para lancamento
 
 ## Tipos De Usuario
 
@@ -198,14 +201,18 @@ Academy e o contexto de aulas, coaches, alunos, turmas e planos.
 Academies podem no MVP:
 
 - existir como contexto inicial escolhido no onboarding
-- reservar rotas e modelo para gestao futura de aulas
+- cadastrar planos com nome, preco, validade em dias corridos e limites de uso
+- vender ou conceder manualmente um plano a um Player existente
+- registrar e corrigir consumo manualmente
+- acompanhar validade, usos restantes e pagamento manual
 
-Academies nao podem no MVP, salvo mudanca explicita de escopo:
+Academies nao podem no MVP:
 
 - gerenciar turmas completas
 - gerenciar coaches
 - aceitar alunos em aulas
-- controlar mensalidades e inadimplencia de alunos
+- gerenciar CRM de alunos externos
+- automatizar cobranca recorrente e inadimplencia
 
 Decisao de escopo:
 
@@ -266,7 +273,7 @@ Regras:
 
 - o nivel e autodeclarado
 - o nivel nao e uma pontuacao verificada
-- o nivel nao e o sistema V2 de overall/card
+- o nivel nao e o sistema V2 de distribuicao de skills
 - o nivel pode ser usado como expectativa em partidas abertas
 - o nivel pode ajudar jogadores a encontrarem jogos adequados
 
@@ -557,7 +564,7 @@ produto a suposicoes de V2.
 - layout publico
 - layout protegido do jogador
 - layout protegido de Organization
-- reserva de layout/rota para Academy
+- layout protegido de Academy
 - reserva de layout/rota para Admin App quando houver fluxo operacional real
 - modelo de navegacao
 - estados de loading, vazio, erro, proibido e nao encontrado
@@ -577,7 +584,7 @@ O app deve ter estas areas conceituais:
 - area publica
 - area do jogador
 - area de Organization
-- area de Academy reservada para evolucao de aulas/coaches/alunos
+- area de Academy com planos e acessos do MVP
 - Admin App reservado para operacao interna quando houver necessidade real
 
 Rascunho de rotas:
@@ -600,6 +607,9 @@ Rascunho de rotas:
 - `/organizations/[organizationSlug]/manage/reservations/[reservationId]`
 - `/organizations/[organizationSlug]/manage/payments`
 - `/academies/[academySlug]/manage`
+- `/academies/[academySlug]/manage/plans`
+- `/academies/[academySlug]/manage/plans/new`
+- `/academies/[academySlug]/manage/access`
 - `/admin-app`
 
 Decisao aberta:
@@ -661,8 +671,8 @@ descoberta, reservas e partidas abertas.
 - lado de jogo
 - pe dominante
 - fundamentos/recursos detalhados
-- overall
-- evolucao de card do jogador
+- orcamento e distribuicao de skills
+- historico de evolucao do jogador
 
 ### Fluxo No Frontend
 
@@ -757,27 +767,30 @@ Perfil do jogador esta pronto quando:
 - jogador consegue salvar e recarregar perfil
 - esporte ou nivel invalido e rejeitado claramente
 
-## Modulo 4: Onboarding De Organization
+## Modulo 4: Onboarding De Organization E Academy
 
 ### Objetivo Do MVP
 
-Permitir que um Organization crie o perfil minimo necessario para expor quadras e
-gerenciar reservas.
+Permitir que um Organization crie o perfil minimo para expor quadras e que uma
+Academy crie o perfil minimo para oferecer planos.
 
 ### Incluido
 
 - conta/perfil de Organization
-- identidade de arena, clube, escola ou organizador
+- identidade de arena, clube, local ou organizador
 - informacoes publicas necessarias para descoberta
 - detalhes operacionais de contato, se necessarios
 - entrada no dashboard do Organization
+- conta/perfil independente de Academy
+- identidade e contato minimo da Academy
+- entrada no dashboard da Academy
 
 ### Fora Do Escopo
 
 - coaches
 - aulas
-- alunos
-- mensalidades
+- CRM de alunos externos
+- cobranca recorrente
 - ERP escolar completo
 - relatorios avancados
 
@@ -798,6 +811,21 @@ Dashboard do Organization:
 - mostrar resumo da agenda do dia
 - mostrar indicadores de reservas/pagamentos pendentes quando existirem
 
+Setup de Academy:
+
+1. usuario autenticado abre area de Academy
+2. se nao houver perfil de Academy, mostrar estado de configuracao
+3. usuario informa nome e dados minimos da Academy
+4. usuario salva perfil da Academy
+5. app redireciona para dashboard da Academy
+
+Dashboard da Academy:
+
+- mostrar progresso de setup
+- mostrar quantidade de planos ativos
+- mostrar resumo de acessos ativos ou perto de expirar
+- mostrar pagamentos pendentes quando existirem
+
 Estados do frontend:
 
 - sem perfil de Organization
@@ -805,6 +833,9 @@ Estados do frontend:
 - area de Organization proibida
 - salvando perfil
 - perfil salvo
+- sem perfil de Academy
+- carregando perfil de Academy
+- area de Academy proibida
 
 ### Comportamento No Backend
 
@@ -815,6 +846,8 @@ Backend deve:
 - atualizar perfil do Organization
 - garantir limites de ownership/acesso
 - impedir acesso a dados de outro Organization
+- criar, ler e atualizar perfil de Academy
+- impedir acesso a dados de outra Academy
 
 ### Conceitos De Dados
 
@@ -822,6 +855,8 @@ Principais:
 
 - `Organization`
 - `OrganizationUser` ou conceito equivalente de vinculo/ownership
+- `Academy`
+- `AcademyUser` ou conceito equivalente de vinculo/ownership
 
 Campos recomendados:
 
@@ -843,13 +878,20 @@ Possiveis endpoints:
 - `GET /organizations/me`
 - `POST /organizations`
 - `PATCH /organizations/me`
+- `GET /academies/me`
+- `POST /academies`
+- `PATCH /academies/me`
 
 ### Regras De Negocio
 
-- Organization e o conceito unico para arena, escola, clube ou organizador
+- Organization e o conceito para arena, local, clube ou organizador
+- Academy e o conceito independente para escola, treino, alunos e planos
 - usuarios de Organization acessam apenas dados do proprio Organization
 - acesso cruzado entre Organizations retorna `forbidden`
 - perfil de Organization deve existir antes da criacao de quadra
+- usuarios de Academy acessam apenas dados da propria Academy
+- acesso cruzado entre Academies retorna `forbidden`
+- perfil de Academy deve existir antes da criacao de plano
 
 ### Necessidades Para Figma
 
@@ -860,14 +902,19 @@ Telas/componentes:
 - formulario de perfil de Organization
 - estado de Organization ausente
 - estado de acesso proibido
+- setup e formulario de perfil de Academy
+- shell do dashboard de Academy
+- estados de Academy ausente e acesso proibido
 
 ### Gate De Integracao
 
-Onboarding de Organization esta pronto quando:
+Onboarding de Organization e Academy esta pronto quando:
 
 - usuario consegue criar perfil de Organization
+- usuario consegue criar perfil de Academy independente de Organization
 - dashboard carrega depois do setup
 - dados do Organization ficam restritos ao Organization autenticado
+- dados da Academy ficam restritos a Academy autenticada
 - estados de ausente/proibido ficam claros
 
 ## Modulo 5: Gestao De Quadras
@@ -1392,8 +1439,10 @@ Acompanhar estado de pagamento manualmente, sem integracao com gateway.
 
 - registro de status de pagamento
 - reserva le status de pagamento
+- acesso de plano de Academy le status de pagamento
 - Organization ve pagamentos pendentes
 - Organization atualiza status manualmente
+- Academy ve e atualiza pagamentos de seus planos manualmente
 - mudancas de status sao controladas e auditaveis
 
 ### Fora Do Escopo
@@ -1403,7 +1452,7 @@ Acompanhar estado de pagamento manualmente, sem integracao com gateway.
 - splits
 - repasses
 - comissao automatica
-- inadimplencia de mensalidade escolar
+- cobranca recorrente e inadimplencia automatizada
 
 ### Fluxo No Frontend
 
@@ -1415,9 +1464,17 @@ Gestao de pagamento pelo Organization:
 4. Organization marca pagamento como pago, falhou ou vencido quando permitido
 5. telas de reserva refletem novo estado
 
+Gestao de pagamento pela Academy:
+
+1. Academy abre os acessos concedidos ou vendidos
+2. Academy ve o status de pagamento relacionado
+3. Academy atualiza o status manualmente quando permitido
+4. Player e Academy veem o novo estado
+
 Visibilidade para jogador:
 
 - jogador ve status de pagamento na reserva
+- jogador ve status de pagamento no acesso de Academy
 - jogador nao paga via gateway Sandicts no MVP
 
 Estados do frontend:
@@ -1434,8 +1491,10 @@ Estados do frontend:
 Backend deve:
 
 - criar ou associar pagamento a reserva
+- criar ou associar pagamento a acesso de plano de Academy
 - expor status de pagamento nas leituras de reserva
-- permitir atualizacoes manuais escopadas por Organization
+- expor status de pagamento nas leituras de acesso de Academy
+- permitir atualizacoes manuais escopadas por Organization ou Academy
 - validar transicoes permitidas
 - manter referencias de provider opcionais para futuro gateway
 - nao exigir dados de gateway no MVP
@@ -1450,7 +1509,8 @@ Principais:
 Campos recomendados:
 
 - reservation id
-- Organization id
+- Academy plan access id, quando aplicavel
+- Organization ou Academy id
 - status
 - valor em centavos
 - moeda
@@ -1465,12 +1525,15 @@ Possiveis endpoints:
 - `GET /organizations/payments`
 - `PATCH /organizations/payments/:paymentId/status`
 - `GET /organizations/reservations/:reservationId/payment`
+- `GET /academies/:academySlug/payments`
+- `PATCH /academies/:academySlug/payments/:paymentId/status`
 
 ### Regras De Negocio
 
 - status de pagamento deve ser explicito
-- atualizacoes manuais sao escopadas por Organization
+- atualizacoes manuais sao escopadas por Organization ou Academy
 - Organization nao pode atualizar pagamentos de outro Organization
+- Academy nao pode atualizar pagamentos de outra Academy
 - campos de provider sao opcionais no MVP
 - `refunded` nao e status operacional do MVP sem fluxo de reembolso definido
 
@@ -1484,6 +1547,7 @@ Telas/componentes:
 - confirmacao de atualizacao
 - erro de atualizacao
 - resumo de pagamento na reserva
+- resumo de pagamento no acesso de Academy
 
 ### Gate De Integracao
 
@@ -1493,8 +1557,182 @@ Pagamentos manuais estao prontos quando:
 - Organization atualiza status manualmente
 - reserva reflete status de pagamento
 - atualizacao de pagamento entre Organizations e proibida
+- Academy atualiza apenas pagamentos de seus proprios acessos
+- acesso de plano reflete status de pagamento
 
-## Modulo 10: Partidas Abertas
+## Modulo 10: Planos De Academy
+
+### Objetivo Do MVP
+
+Permitir que uma Academy represente ofertas reais de treino sem depender de
+nomes fixos como "mensal" e controle manualmente quem ainda pode usar o plano.
+
+### Incluido
+
+- plano com nome e descricao definidos pela Academy
+- preco e moeda
+- validade em dias corridos
+- limite total de usos opcional
+- limite semanal de usos opcional
+- plano ativo ou inativo
+- venda ou concessao manual para Player existente
+- data de ativacao e expiracao calculada
+- snapshot das regras no momento da concessao
+- consumo e correcao manual auditavel
+- status agendado, ativo, esgotado, expirado e cancelado
+- pagamento manual relacionado
+
+### Fora Do Escopo
+
+- Player externo sem conta Sandicts
+- agenda de aulas
+- reserva de turma
+- coaches
+- check-in automatico
+- renovacao automatica
+- pausa ou congelamento
+- cupom, prorata, split e repasse
+- transferencia de usos
+- ERP escolar completo
+
+### Fluxo No Frontend
+
+Cadastro do plano:
+
+1. Academy abre gestao de planos
+2. Academy informa nome, preco e validade em dias corridos
+3. Academy escolhe acesso ilimitado, limite semanal, pacote de usos ou uma
+   combinacao de limites
+4. app valida a configuracao
+5. Academy salva e ativa o plano
+
+Venda ou concessao:
+
+1. Academy escolhe um plano ativo
+2. Academy seleciona um Player existente
+3. Academy informa a data de ativacao
+4. app mostra a data final e copia das regras comerciais
+5. Academy confirma o acesso e o pagamento manual relacionado
+
+Consumo:
+
+1. Academy abre o acesso do Player
+2. app informa se mais um uso e permitido
+3. Academy registra um uso
+4. app atualiza total restante e limite da janela atual
+5. uma correcao posterior restaura o uso sem apagar o historico
+
+Visibilidade do Player:
+
+- nome do plano e Academy
+- inicio e expiracao
+- status do acesso e pagamento
+- usos totais e restantes, quando limitados
+- limite e consumo da janela semanal, quando limitados
+
+### Comportamento No Backend
+
+Backend deve:
+
+- criar, editar, listar, ativar e inativar planos escopados por Academy
+- validar dias de validade e limites como inteiros positivos
+- tratar ausencia de limite total e semanal como acesso ilimitado
+- criar acesso com snapshot de nome, preco, moeda, validade e limites
+- calcular expiracao por dias corridos na timezone da Academy
+- calcular janelas consecutivas de sete dias desde a ativacao
+- impedir consumo quando acesso nao estiver ativo
+- impedir consumo acima do limite total ou semanal
+- registrar consumo e correcao de forma auditavel
+- derivar ou manter status de acesso de forma explicita
+- impedir acesso cruzado entre Academies
+
+### Conceitos De Dados
+
+Principais:
+
+- `AcademyPlan`
+- `AcademyPlanAccess`
+- `AcademyPlanUsage`
+- `Payment`
+
+Campos recomendados do plano:
+
+- Academy id
+- nome e descricao
+- valor e moeda
+- dias de validade
+- limite total opcional
+- limite semanal opcional
+- ativo
+- timestamps
+
+Campos recomendados do acesso:
+
+- Academy e Player ids
+- AcademyPlan de origem
+- snapshot de nome, valor, moeda, validade e limites
+- data de ativacao e expiracao
+- status
+- Payment relacionado, quando aplicavel
+- timestamps
+
+### Rascunho De API
+
+Possiveis endpoints:
+
+- `GET /academies/:academySlug/plans`
+- `POST /academies/:academySlug/plans`
+- `PATCH /academies/:academySlug/plans/:planId`
+- `GET /academies/:academySlug/plan-access`
+- `POST /academies/:academySlug/plan-access`
+- `GET /academies/:academySlug/plan-access/:accessId`
+- `POST /academies/:academySlug/plan-access/:accessId/usages`
+- `POST /academies/:academySlug/plan-access/:accessId/usage-corrections`
+- `GET /players/me/academy-plan-access`
+
+### Regras De Negocio
+
+- nome do plano nao determina comportamento
+- validade usa dias corridos e a data de ativacao conta como primeiro dia
+- plano de 28 dias iniciado em 1 de julho vale ate o fim de 28 de julho
+- limite semanal usa janelas de sete dias ancoradas na ativacao
+- quando limites total e semanal existem, ambos devem ser respeitados
+- usos nao consumidos expiram e nao acumulam
+- editar/inativar plano nao altera acessos existentes
+- somente Academy dona pode alterar plano, acesso, uso e pagamento
+- plano gratuito pode ter valor zero
+
+Regras detalhadas:
+
+- `docs/product/sandicts-academy-plan-model.md`
+
+### Necessidades Para Figma
+
+Telas/componentes:
+
+- lista de planos ativos e inativos
+- formulario de plano com presets de uso
+- resumo de regras antes de salvar
+- lista de acessos por Player
+- concessao/venda de plano
+- detalhe de acesso e consumo
+- indicador de usos restantes e janela semanal
+- acao de registrar uso e confirmar correcao
+- estados agendado, ativo, esgotado, expirado e cancelado
+
+### Gate De Integracao
+
+Planos de Academy estao prontos quando:
+
+- Academy representa os cinco exemplos da especificacao de planos
+- editar plano nao altera um acesso ja criado
+- expiracao de 28 dias e calculada por dias corridos
+- limite total e semanal bloqueiam consumo corretamente
+- consumo corrigido preserva historico
+- Player ve seus limites, saldo, validade e statuses
+- acesso entre Academies e proibido
+
+## Modulo 11: Partidas Abertas
 
 ### Objetivo Do MVP
 
@@ -1646,7 +1884,7 @@ Partidas abertas estao prontas quando:
 - participante consegue sair
 - criador consegue cancelar
 
-## Modulo 11: Preparacao Para Lancamento
+## Modulo 12: Preparacao Para Lancamento
 
 ### Objetivo Do MVP
 
@@ -1678,11 +1916,13 @@ Lancamento deve validar:
 - Google sign-in e One Tap
 - onboarding de perfil
 - setup de Organization
+- setup de Academy
 - criacao de quadra
 - publicacao de disponibilidade
 - filtros de descoberta
 - solicitacao e confirmacao de reserva
 - atualizacao de pagamento manual
+- cadastro, concessao, consumo e expiracao de plano de Academy
 - criar/entrar/sair de partida aberta
 - sign-out/expiracao de sessao
 
@@ -1693,8 +1933,10 @@ Deve cobrir:
 - erros de validacao
 - erros de regra de negocio
 - acesso proibido entre Organizations
+- acesso proibido entre Academies
 - acesso nao autenticado
 - prevencao de reserva duplicada
+- bloqueio de consumo de plano expirado, esgotado ou acima do limite semanal
 - prevencao de entrada duplicada em partida aberta
 
 ### Checagens De Frontend
@@ -1776,6 +2018,15 @@ Use esta lista para criar as primeiras paginas/frames no Figma.
 - lista de pagamentos
 - atualizacao manual de pagamento
 
+### Academy
+
+- setup e dashboard da Academy
+- lista e formulario de planos
+- concessao/venda manual de plano
+- lista e detalhe de acessos por Player
+- consumo e correcao manual
+- validade, saldo e status de pagamento
+
 ## Formato Do Roadmap No Jira
 
 Epicos recomendados:
@@ -1783,12 +2034,13 @@ Epicos recomendados:
 - `[MVP] Authentication and Account Access`
 - `[Frontend] Web App Foundation`
 - `[MVP] Player Profile`
-- `[MVP] Organization Onboarding`
+- `[MVP] Organization and Academy Onboarding`
 - `[MVP] Court Management`
 - `[MVP] Availability`
 - `[MVP] Discovery`
 - `[MVP] Reservations`
 - `[MVP] Manual Payments`
+- `[MVP] Academy Plans`
 - `[MVP] Open Matches`
 - `[MVP] Launch Hardening`
 

@@ -6,6 +6,8 @@ priority: medium
 canonical: docs/product/sandicts-v2-backlog.md
 related:
   - docs/product/sandicts-mvp-scope.md
+  - docs/product/sandicts-player-skill-allocation-model.md
+  - docs/product/sandicts-academy-plan-model.md
   - docs/product/sandicts-scope-checklist.md
   - docs/business-rules/sandicts-business-rules.md
 scope: product, v2, future, player-progression, tournaments, b2b, social
@@ -70,22 +72,31 @@ MVP dependency:
 
 V2 scope:
 
-- player card inspired by football game cards
-- card shows sport, photo, nationality, game side, and overall
-- card color changes by overall range
+- player sport profile shows sport, photo, nationality, game side, and level
 - player has sport-specific fundamentals
-- each fundamental has score from 0 to 100
-- overall is calculated from fundamental scores
+- each Sport and Level defines a skill point budget
+- player distributes the complete budget across eligible sport-specific skills
+- each skill allocation has a score from 0 to 100
+- players at the same Sport and Level have the same budget but can express
+  different strengths
+- no player overall is calculated or displayed
 - player can register monthly evolution
 - player can compare historical evolution
 - player can self-assess
 - coach or Academy can assess player
-- system calculates attack, defense, fundamentals, resources/plastic skills
+- system can group fundamentals, attack, defense, and special/plastic skills
+  without reducing them to one overall
 
 Important product principle:
 
 - evolution is a retention and identity layer, not a requirement for MVP reservations
-- MVP simple level must not pretend to be a verified full athlete score
+- MVP simple level must not pretend to be a verified skill assessment
+- skill allocation describes play style within a level; it is not an objective
+  comparison of absolute ability
+
+Detailed model:
+
+- [`docs/product/sandicts-player-skill-allocation-model.md`](sandicts-player-skill-allocation-model.md)
 
 Future after V2:
 
@@ -124,7 +135,8 @@ Open modeling questions:
 - which items are attack skills
 - which items are defensive skills
 - which items are plastic/resources
-- how much plastic/resources should affect overall
+- whether plastic/resources use points, unlocks, or both
+- final point budget for each futevolei level
 - whether Academy/coach assessment should weigh more than self-assessment
 
 ## V2 Tournaments
@@ -153,8 +165,8 @@ V2 scope:
 
 - Academy can manage coaches
 - Academy can manage classes/groups
-- Academy can register students
-- Academy can register membership/monthly tuition
+- Academy can manage richer student records
+- Academy can add recurring renewal and monthly tuition behavior to MVP plans
 - Academy can see active students
 - Academy can see overdue students
 - Academy can see revenue by period
@@ -163,7 +175,8 @@ V2 scope:
 
 MVP dependency:
 
-- keep `Academy`, `Organization`, `Payment`, and manual payment records compatible with student and membership flows.
+- evolve the MVP `AcademyPlan`, `AcademyPlanAccess`, `AcademyPlanUsage`, and
+  manual Payment records without changing historical purchases.
 
 ## V2 Payments And Monetization
 

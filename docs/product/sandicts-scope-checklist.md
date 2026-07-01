@@ -61,8 +61,12 @@ Como marcar:
 | Organization pode definir regras da quadra     | [x] | [ ] | [ ]    | [ ]       | regras simples visiveis ao player                 |
 | Organization pode ativar/inativar quadras      | [x] | [ ] | [ ]    | [ ]       | controle operacional minimo                       |
 | Academy pode criar contexto proprio            | [x] | [ ] | [ ]    | [ ]       | contexto independente de Organization             |
+| Academy pode cadastrar planos configuraveis    | [x] | [ ] | [ ]    | [ ]       | nome, preco, validade e limites de uso             |
+| Academy pode vender/conceder plano a Player    | [x] | [ ] | [ ]    | [ ]       | fluxo manual; somente Player existente             |
+| Academy pode registrar consumo de plano        | [x] | [ ] | [ ]    | [ ]       | consumo e estorno manual auditavel                 |
 | Academy pode gerenciar coaches                 | [ ] | [x] | [ ]    | [ ]       | entra com gestao de aulas                         |
 | Academy pode gerenciar aulas/turmas            | [ ] | [x] | [ ]    | [ ]       | nao essencial para marketplace inicial            |
+| Academy pode gerenciar alunos externos/CRM     | [ ] | [x] | [ ]    | [ ]       | fora do recorte minimo de planos do MVP            |
 
 ## 3. Descoberta e marketplace
 
@@ -177,11 +181,13 @@ Como marcar:
 | Card mostra foto                               | [ ] | [x] | [ ]    | [ ]       |                                                            |
 | Card mostra nacionalidade                      | [ ] | [x] | [ ]    | [ ]       |                                                            |
 | Card mostra lado de jogo                       | [ ] | [x] | [ ]    | [ ]       |                                                            |
-| Card mostra overall                            | [ ] | [x] | [ ]    | [ ]       |                                                            |
-| Cor do card muda conforme overall              | [ ] | [x] | [ ]    | [ ]       |                                                            |
+| Card mostra overall                            | [ ] | [ ] | [ ]    | [x]       | modelo novo nao usa overall                              |
+| Cor do card muda conforme overall              | [ ] | [ ] | [ ]    | [x]       | modelo novo nao usa overall                              |
 | Player tem fundamentos por esporte             | [ ] | [x] | [ ]    | [ ]       |                                                            |
 | Fundamento tem score de 0 a 100                | [ ] | [x] | [ ]    | [ ]       |                                                            |
-| Overall e calculado a partir dos fundamentos   | [ ] | [x] | [ ]    | [ ]       |                                                            |
+| Nivel define orcamento de pontos por esporte   | [ ] | [x] | [ ]    | [ ]       | mesmo nivel e esporte recebem o mesmo orcamento          |
+| Player distribui todo orcamento entre skills  | [ ] | [x] | [ ]    | [ ]       | distribuicoes diferentes representam estilos diferentes |
+| Overall e calculado a partir dos fundamentos   | [ ] | [ ] | [ ]    | [x]       | soma valida orcamento, mas nao vira overall              |
 | Player pode registrar evolucao mensal          | [ ] | [x] | [ ]    | [ ]       |                                                            |
 | Player pode comparar evolucao historica        | [ ] | [x] | [ ]    | [ ]       |                                                            |
 | Player pode se autoavaliar                     | [ ] | [x] | [ ]    | [ ]       | primeira versao da evolucao pode comecar por autoavaliacao |
@@ -266,3 +272,9 @@ Use esta secao para anotar decisoes que ainda precisam ser fechadas.
 - [x] Decidir se o antigo conceito de partner continua existindo. Decisao atual: nao; usar `Organization` para operadores de quadras/eventos e `Academy` para aulas, coaches e alunos.
 - [x] Decidir se geolocalizacao entra no MVP. Decisao inicial: V2.
 - [x] Decidir se evolucao do jogador entra no MVP. Decisao inicial: V2.
+- [x] Decidir se planos de Academy entram no MVP. Decisao atual: sim, com
+  catalogo configuravel, concessao/venda manual para Player existente,
+  validade em dias corridos e consumo manual; ERP escolar completo continua V2.
+- [x] Decidir se a evolucao V2 usa overall. Decisao atual: nao; cada nivel por
+  esporte define um orcamento igual de pontos, distribuido de forma diferente
+  entre as skills.

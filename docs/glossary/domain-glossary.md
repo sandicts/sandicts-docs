@@ -7,6 +7,8 @@ canonical: docs/glossary/domain-glossary.md
 related:
   - docs/product/sandicts-product-context.md
   - docs/product/sandicts-mvp-scope.md
+  - docs/product/sandicts-academy-plan-model.md
+  - docs/product/sandicts-player-skill-allocation-model.md
   - docs/business-rules/sandicts-business-rules.md
 scope: domain-vocabulary, entity-names, frontend-backend-alignment
 read-when:
@@ -33,13 +35,19 @@ Use these names consistently in docs, Jira, backend, frontend, and AI routing.
 - `Academy`: training, classes, coaches, students, and plans context.
 - `AcademyClass`: scheduled class or group lesson controlled by an academy.
 - `CoachAssignment`: permission that lets a coach manage assigned academy classes.
+- `AcademyPlan`: reusable commercial offer configured by an Academy.
+- `AcademyPlanAccess`: individual plan access sold or granted to a Player,
+  preserving the rules that applied at creation.
+- `AcademyPlanUsage`: auditable consumption or restoration of one use from an
+  AcademyPlanAccess.
 - `Admin App`: internal Sandicts operational context for support, moderation, manual review, and controlled overrides.
 - `Sport`: futevolei, beach tennis, beach volleyball, or similar sand sport.
 - `AvailabilitySlot`: time window made available by an Organization for a court.
 - `Reservation`: booking attempt or confirmed booking for a court slot.
 - `OpenMatch`: player-created or Organization-created game with joinable spots.
 - `Tournament`: Organization-created competition or event.
-- `Payment`: system record of money status for reservations, memberships, and tournaments.
+- `Payment`: system record of money status for reservations, Academy plan
+  access, memberships, and tournaments.
 - `Membership`: recurring relationship between a player and an Organization or academy.
 - `Achievement`: optional future reward/status record for player participation, progression, or tournaments.
 
@@ -50,6 +58,8 @@ Use these names consistently in docs, Jira, backend, frontend, and AI routing.
   venues, arenas, clubs, or events.
 - Use `Academy` for classes, coaches, students, training plans, and class
   management.
+- Do not use `Membership` as a synonym for every Academy plan; a fixed class
+  package may be non-recurring.
 - Use `Admin App`, not only `Admin`, when referring to the internal Sandicts
   operational application/context.
 - A single `User` can have Player, Organization, Academy, and Admin App

@@ -46,8 +46,9 @@ For docs-only or setup work, describe why the repository needed this change.
 
 ## Notes
 
-- Primary Jira: `KAN-123`
+- Primary Jira: `KAN-123` or not applicable (`NO-JIRA` documentation-only change)
 - Related Jira: none
-- Jira status: move delivered issue(s) to `In Review` after opening this PR
+- Jira status: move delivered issue(s) to `In Review` or not applicable
+- Tracking exception: none or no Jira task exists; PR contains documentation only
 - Branch cleanup: delete branch after merge enabled
 - Known gaps or skipped validation: none

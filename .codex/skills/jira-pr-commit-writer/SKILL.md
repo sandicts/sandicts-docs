@@ -32,16 +32,31 @@ Default language:
 
 ## PR Title
 
-Use this format:
+When a Jira task exists, use:
 
 ```text
 [KAN-123] <type>(<scope>): <short summary>
 ```
 
+For documentation-only work without a Jira task, use:
+
+```text
+[NO-JIRA] docs(<scope>): <short summary>
+```
+
 Rules:
 
-- The primary Jira key must be the first characters in the PR title.
-- Never use `[codex]`, a branch name, or a title without a Jira key.
+- When a Jira task exists, its primary key must be the first characters in the
+  PR title.
+- `[NO-JIRA]` is allowed only in `sandicts/sandicts-docs`, when no Jira task
+  exists and every changed file is documentation or documentation-routing
+  metadata.
+- Never use `[NO-JIRA]` for source code, runtime configuration, database
+  schema, infrastructure, or implementation work.
+- If a Jira task is created or discovered before merge, rename the PR to use
+  that Jira key.
+- Never use `[codex]`, a branch name, or a title without a Jira key or the
+  approved `[NO-JIRA]` prefix.
 - If a generic publishing tool suggests another title, override it with this
   Sandicts format before opening or updating the PR.
 - Do not rely on `gh pr create --fill` or optional connector fields to infer a
@@ -59,6 +74,15 @@ template shape.
 
 Never create or leave a PR with a blank body, omitted body, raw template
 placeholders, or a shortened alternative body.
+
+For `[NO-JIRA]` PRs, set the Notes tracking values to:
+
+```text
+- Primary Jira: not applicable (`NO-JIRA` documentation-only change)
+- Related Jira: none
+- Jira status: not applicable
+- Tracking exception: no Jira task exists; PR contains documentation only
+```
 
 Shared docs validation defaults:
 
@@ -91,7 +115,8 @@ Rules:
 
 - Use imperative mood.
 - Keep the first line under 72 characters when practical.
-- The PR title carries the Jira key by default.
+- The PR title carries the Jira key by default or `[NO-JIRA]` for the approved
+  documentation-only exception.
 - Do not include a Jira key in the commit unless the user explicitly asks for
   it or the commit will be consumed outside PR context.
 

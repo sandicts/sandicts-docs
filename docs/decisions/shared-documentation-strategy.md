@@ -14,6 +14,7 @@ related:
 scope: documentation, product-rules, frontend-backend-alignment, source-of-truth, codex
 read-when:
   - deciding where product or business documentation should live
+  - deciding whether a complex feature needs its own document
   - moving docs between shared, backend, and frontend repositories
   - preventing duplicated frontend/backend product rules
   - optimizing Sandicts docs for Codex token usage
@@ -74,6 +75,52 @@ Frontend repo owns:
 - UI/component decisions
 - page-level UX implementation notes
 - client state, cache, and form patterns
+
+## Document Granularity Rule
+
+Sandicts uses a hybrid documentation model.
+
+Simple, stable rules remain consolidated in the shared overview documents,
+especially:
+
+- `docs/business-rules/sandicts-business-rules.md`
+- `docs/product/sandicts-mvp-scope.md`
+- `docs/product/sandicts-v2-backlog.md`
+
+A complex feature should receive its own document under `docs/product/` when
+one or more of these conditions apply:
+
+- it has multiple interacting rules, limits, states, or lifecycle transitions
+- it needs examples and edge-case behavior to be understood correctly
+- it has important product decisions or open questions of its own
+- it is expected to change or grow independently
+- keeping its complete behavior in an overview document would make that
+  document hard to navigate
+
+Do not create a separate file for every isolated rule. A small group of stable
+bullets should remain in the relevant overview document.
+
+When a dedicated feature document exists:
+
+- it owns the detailed behavior for that feature
+- overview, scope, and business-rule documents keep only the summary needed for
+  routing and decision-making
+- overview documents link to the dedicated feature document instead of copying
+  all details
+- the feature document includes durable frontmatter with `read-when`,
+  `do-not-read-when`, `related`, and `scope`
+- `docs/ai/index.md` is updated so Codex can load the feature document only
+  when relevant
+- related scope, glossary, and planning documents are updated when the feature
+  changes their decisions
+
+Current examples:
+
+- `docs/product/sandicts-academy-plan-model.md`
+- `docs/product/sandicts-player-skill-allocation-model.md`
+
+This separation lets complex rules evolve without turning the general business
+rules file into an ever-growing specification for every feature.
 
 ## Codex Routing Rules
 

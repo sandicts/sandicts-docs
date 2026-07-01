@@ -6,6 +6,7 @@ priority: high
 canonical: docs/product/sandicts-mvp-scope.md
 related:
   - docs/product/sandicts-product-context.md
+  - docs/product/sandicts-academy-plan-model.md
   - docs/product/sandicts-scope-checklist.md
   - docs/product/sandicts-v2-backlog.md
   - docs/business-rules/sandicts-business-rules.md
@@ -38,13 +39,14 @@ The MVP should prove the marketplace and playable community core:
 - players can discover courts by simple filters
 - players can request reservations
 - organizations can manage availability and reservation state
+- academies can create configurable plans and manually control Player access
 - payments can be tracked manually
 - players can create and join open matches
 
 The MVP must stay focused. It intentionally excludes:
 
 - geolocation and nearby search
-- full player evolution/card/overall system
+- full player evolution and skill allocation system
 - tournaments
 - advanced academy/class management
 - gateway payment integration
@@ -88,7 +90,7 @@ Rules:
 - users with more than one accessible context should switch through a context selector
 - user-facing entity routes should use slugs from the start while backend APIs can keep stable IDs internally
 - simple player level is allowed in the MVP only as a matchmaking/filtering attribute
-- simple player level is not the V2 evolution/overall system
+- simple player level is not the V2 skill allocation system
 - player location is not part of the MVP because geolocation is V2
 - full public player profile is V2, but the public route direction is `/players/:playerSlug`
 - player profile visibility should support public, friends-only, and private as the model evolves
@@ -148,8 +150,18 @@ Rules:
 
 MVP status:
 
-- full academy/class operations remain V2 unless product scope changes
+- Academy plan catalog, manual sales or grants to existing Players, expiration,
+  and manual usage control are included in the MVP
+- plan names do not define behavior; each plan explicitly configures price,
+  validity in calendar days, total use allowance, and/or weekly use limit
+- a plan called "Monthly" can be valid for 28 calendar days
+- full Academy classes, coaches, student CRM, automated attendance, automated
+  billing, and advanced reports remain V2
 - the MVP should not model Organization as the owner of Academy
+
+Detailed Academy plan rules:
+
+- [`docs/product/sandicts-academy-plan-model.md`](sandicts-academy-plan-model.md)
 
 ## MVP Discovery
 
@@ -211,8 +223,10 @@ Included:
 - manual payment registration
 - payment status tracked by Sandicts
 - reservation reads payment status
+- Academy plan access reads payment status
 - Organization sees pending payments
 - Organization can manually launch/register payment state
+- Academy can manually launch/register payment state for its own plan customers
 
 Payment statuses:
 
@@ -227,7 +241,7 @@ Not in MVP:
 - payment gateway integration
 - split or payout automation
 - full commission settlement
-- academy delinquency for memberships
+- automated Academy delinquency workflows
 
 Rules:
 
@@ -278,16 +292,20 @@ Included:
 
 - Organization can manually launch/register payment state
 - Organization can see operational agenda and pending payments
+- Academy can create, edit, activate, and deactivate configurable plans
+- Academy can manually sell or grant plan access to an existing Player
+- Academy can manually consume or restore auditable plan uses
+- Player can see plan validity, remaining uses, weekly limits, and statuses
 
 Not in MVP:
 
-- students
-- memberships
-- monthly tuition
+- external or guest student CRM
+- automatic recurring memberships
 - active student reports
 - overdue student reports
 - revenue by period reports
 - reservations by period reports
+- class schedules, attendance automation, and coach management
 - events
 
 ## Explicitly V2
@@ -297,9 +315,9 @@ These are confirmed out of MVP:
 - geolocation
 - full public player profile
 - player photo, bio, nationality, and side
-- player evolution/card/overall/fundamentals
+- player evolution and sport-specific skill allocation
 - tournaments and tournament registration
-- students and memberships
+- full student CRM and automatic recurring memberships
 - coach/classes management
 - full academy management
 - payment gateway

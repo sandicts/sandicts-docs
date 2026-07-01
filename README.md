@@ -41,3 +41,13 @@ Start with:
 
 Then read only the files selected by its `read-when` routing. Avoid loading
 long roadmap or functional specs unless the task needs their details.
+
+## Documentation Granularity
+
+Simple and stable rules stay in the shared scope and business-rule documents.
+Complex features that have interacting rules, states, examples, or independent
+evolution receive a dedicated document under `docs/product/`.
+
+The full decision is documented in:
+
+- `docs/decisions/shared-documentation-strategy.md`

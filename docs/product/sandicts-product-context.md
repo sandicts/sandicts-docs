@@ -7,6 +7,8 @@ canonical: docs/product/sandicts-product-context.md
 related:
   - docs/business-rules/sandicts-business-rules.md
   - docs/product/sandicts-mvp-scope.md
+  - docs/product/sandicts-academy-plan-model.md
+  - docs/product/sandicts-player-skill-allocation-model.md
   - docs/product/sandicts-v2-backlog.md
   - docs/decisions/shared-documentation-strategy.md
   - docs/ai/api/zod-swagger-foundation.md
@@ -108,6 +110,8 @@ Academies can:
 
 - manage classes and coaches
 - manage students and class requests
+- create configurable plans with Academy-defined names, prices, validity, and
+  usage limits
 - control plan/payment status
 - define rules for student acceptance and extra classes
 
@@ -151,10 +155,12 @@ Admins are internal Sandicts operators and should be introduced only when a real
 
 ### B2B Management
 
-- MVP starts with Organization onboarding, courts, availability, reservations, and simple payment status visibility
-- academy management, student management, membership control, coaches, classes,
-  delinquency workflows, and richer reports are V2 concerns unless product
-  scope changes
+- MVP starts with Organization onboarding, courts, availability, reservations,
+  and simple payment status visibility
+- MVP Academies can create configurable plans and manually grant or sell
+  time-limited access to existing Players
+- full Academy student management, coaches, classes, automated billing,
+  delinquency workflows, and richer reports remain V2 concerns
 
 ## Community And Lifestyle
 
@@ -224,15 +230,16 @@ Prefer a useful, shippable marketplace core:
 4. availability calendar
 5. court discovery by sport, availability, price, and Organization profile
 6. reservation request and confirmation
-7. open match creation and joining
-8. basic manual payment status tracking
+7. Academy plan catalog and manual Player access control
+8. open match creation and joining
+9. basic manual payment status tracking
 
 Avoid early overengineering:
 
 - complex recommendation engines
 - full ERP for organizations or academies
 - advanced rankings before real usage exists
-- full player evolution, cards, fundamentals, and overall before V2
+- full player evolution and skill allocation before V2
 - geolocation before V2
 - tournament management before V2
 - blockchain-first architecture for non-blockchain flows
