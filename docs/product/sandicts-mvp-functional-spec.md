@@ -276,6 +276,9 @@ Regras:
 - o nivel nao e o sistema V2 de distribuicao de skills
 - o nivel pode ser usado como expectativa em partidas abertas
 - o nivel pode ajudar jogadores a encontrarem jogos adequados
+- no MVP o jogador tem exatamente um esporte principal
+- esportes adicionais sao capacidade futura paga e nao aparecem como lista ativa
+  no contrato MVP
 
 Sugestao inicial de niveis:
 
@@ -283,10 +286,9 @@ Sugestao inicial de niveis:
 - `intermediate`
 - `advanced`
 
-Decisao aberta:
+Decisao:
 
-- se o nivel e global por jogador, por esporte, ou ambos. Direcao atual: nivel
-  por esporte.
+- no MVP o nivel pertence ao esporte principal do jogador.
 
 ### Visibilidade De Status E Estado
 
@@ -658,7 +660,7 @@ descoberta, reservas e partidas abertas.
 
 - nome de exibicao
 - esporte principal
-- nivel simples por esporte
+- nivel simples no esporte principal
 - estado de completude do perfil
 - edicao de perfil basico
 
@@ -720,14 +722,14 @@ Principais:
 
 - `PlayerProfile`
 - `Sport`
-- `PlayerSportLevel` ou equivalente
+- nivel simples do esporte principal
 
 Campos recomendados:
 
 - account id
 - nome de exibicao
 - esporte principal
-- nivel por esporte
+- nivel do esporte principal
 - timestamps
 
 ### Rascunho De API
@@ -735,12 +737,15 @@ Campos recomendados:
 Possiveis endpoints:
 
 - `GET /players/me`
+- `POST /players/me`
 - `PATCH /players/me`
 - `GET /sports`
 
 ### Regras De Negocio
 
 - conta autenticada pode ter um perfil de jogador
+- perfil MVP tem exatamente um esporte principal
+- multi-esporte e uma capacidade futura paga
 - perfil deve referenciar esportes suportados no MVP
 - nivel simples e autodeclarado
 - nivel de perfil nao e ranking

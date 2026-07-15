@@ -78,7 +78,7 @@ Included:
 - Google One Tap sign-in
 - basic player profile editing
 - player main sport
-- simple player level by sport
+- simple player level for the player's main sport
 - initial context choice: Player, Organization, or Academy
 
 Rules:
@@ -89,6 +89,9 @@ Rules:
 - the initial onboarding choice creates or opens the first context; it does not permanently define account type
 - users with more than one accessible context should switch through a context selector
 - user-facing entity routes should use slugs from the start while backend APIs can keep stable IDs internally
+- the MVP player profile supports exactly one main sport per player
+- additional player sports are future paid capability and must not appear as
+  active MVP profile capacity
 - simple player level is allowed in the MVP only as a matchmaking/filtering attribute
 - simple player level is not the V2 skill allocation system
 - player location is not part of the MVP because geolocation is V2
