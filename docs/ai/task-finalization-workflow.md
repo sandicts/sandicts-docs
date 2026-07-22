@@ -5,6 +5,7 @@ role: source-of-truth
 priority: high
 canonical: docs/ai/task-finalization-workflow.md
 related:
+  - docs/ai/dependency-security-remediation.md
   - docs/ai/pull-request-standard.md
   - .codex/skills/jira-pr-commit-writer/SKILL.md
   - .github/pull_request_template.md
@@ -142,6 +143,11 @@ For frontend repository changes, follow
 
 For backend repository changes, follow
 `sandicts/nodejs-sandicts-api:docs/ai/task-finalization-workflow.md`.
+
+For dependency audit remediation in frontend or backend, follow
+`docs/ai/dependency-security-remediation.md`. Deliver one isolated application
+PR per affected repository, merge remediation before updating any unrelated
+blocked PR, and keep dependency changes out of shared documentation commits.
 
 ## Jira Status Rule
 
