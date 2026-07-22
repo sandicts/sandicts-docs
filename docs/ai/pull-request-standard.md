@@ -5,6 +5,7 @@ role: source-of-truth
 priority: high
 canonical: docs/ai/pull-request-standard.md
 related:
+  - docs/ai/dependency-security-remediation.md
   - docs/ai/task-finalization-workflow.md
   - .github/pull_request_template.md
   - sandicts/reactjs-sandicts-web:.github/pull_request_template.md
@@ -179,6 +180,11 @@ For `sandicts/reactjs-sandicts-web`:
   `npm run typecheck`, and `npm run build`
 - dependency or security changes: run `npm audit --audit-level=moderate`
 - tests: run when test tooling exists and the change touches covered behavior
+
+For dependency audit remediation in either application repository, also follow
+`docs/ai/dependency-security-remediation.md`. Use a dedicated Jira task and PR,
+keep the audit blocking at `moderate`, validate from `npm ci`, and update any
+unrelated blocked PR only after the remediation reaches its integration branch.
 
 For `sandicts/sandicts-docs`:
 

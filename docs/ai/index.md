@@ -46,6 +46,7 @@ of files for the current task.
 | [`docs/product/sandicts-mvp-functional-spec.md`](../product/sandicts-mvp-functional-spec.md) | Detailed MVP functional spec; read on demand |
 | [`docs/decisions/shared-documentation-strategy.md`](../decisions/shared-documentation-strategy.md) | Ownership decision for shared vs app-specific docs |
 | [`docs/decisions/api-contract-governance.md`](../decisions/api-contract-governance.md) | Cross-app API compatibility and delivery rules |
+| [`docs/ai/dependency-security-remediation.md`](dependency-security-remediation.md) | Cross-app dependency audit remediation standard |
 | [`docs/ai/pull-request-standard.md`](pull-request-standard.md) | Shared PR title, body, validation, and no-blank-body standard |
 | [`docs/ai/task-finalization-workflow.md`](task-finalization-workflow.md) | Shared docs commit, PR, validation, and Jira review workflow |
 
@@ -100,6 +101,13 @@ For finishing shared docs work, committing, or opening a PR, read:
 2. `docs/ai/pull-request-standard.md`
 3. `.codex/skills/jira-pr-commit-writer/SKILL.md`
 4. `.github/pull_request_template.md`
+
+For a dependency audit failure in frontend or backend, read:
+
+1. `docs/ai/dependency-security-remediation.md`
+2. the affected repository's `docs/ai/ci-cd/security-audit-remediation.md`
+3. `docs/ai/pull-request-standard.md`
+4. `docs/ai/task-finalization-workflow.md`
 
 For frontend implementation, do not load all shared docs. Start in the frontend
 repo and read shared docs only for product, scope, entity, or business-rule
