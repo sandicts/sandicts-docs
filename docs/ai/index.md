@@ -46,6 +46,7 @@ of files for the current task.
 | [`docs/product/sandicts-mvp-functional-spec.md`](../product/sandicts-mvp-functional-spec.md) | Detailed MVP functional spec; read on demand |
 | [`docs/decisions/shared-documentation-strategy.md`](../decisions/shared-documentation-strategy.md) | Ownership decision for shared vs app-specific docs |
 | [`docs/decisions/api-contract-governance.md`](../decisions/api-contract-governance.md) | Cross-app API compatibility and delivery rules |
+| [`docs/decisions/frontend-deployment-target.md`](../decisions/frontend-deployment-target.md) | Frontend provider, environment, CORS, cookie, and deployed authentication decision |
 | [`docs/ai/dependency-security-remediation.md`](dependency-security-remediation.md) | Cross-app dependency audit remediation standard |
 | [`docs/ai/pull-request-standard.md`](pull-request-standard.md) | Shared PR title, body, validation, and no-blank-body standard |
 | [`docs/ai/task-finalization-workflow.md`](task-finalization-workflow.md) | Shared docs commit, PR, validation, and Jira review workflow |
@@ -83,6 +84,12 @@ For an API contract or compatibility change, read:
 2. `docs/decisions/shared-documentation-strategy.md`
 3. the backend semantic API contract and generated OpenAPI
 4. frontend API integration docs when client behavior changes
+
+For frontend or browser-facing backend deployment work, read:
+
+1. `docs/decisions/frontend-deployment-target.md`
+2. the frontend deployment-environment document
+3. the backend configuration foundation
 
 For entity naming, read:
 
