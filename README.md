@@ -12,6 +12,7 @@ Use this repository as the single source of truth for:
 - business rules
 - domain glossary
 - cross-app product decisions
+- cross-app deployment, environment, and browser integration decisions
 - Jira roadmap and issue-writing rules
 - AI routing for shared Sandicts context
 
@@ -51,3 +52,8 @@ evolution receive a dedicated document under `docs/product/`.
 The full decision is documented in:
 
 - `docs/decisions/shared-documentation-strategy.md`
+
+Current cross-app technical decisions include:
+
+- `docs/decisions/api-contract-governance.md`
+- `docs/decisions/frontend-deployment-target.md`
