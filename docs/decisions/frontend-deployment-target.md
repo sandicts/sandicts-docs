@@ -23,11 +23,13 @@ do-not-read-when:
 
 ## Status
 
-Accepted for MVP implementation under KAN-64.
+Accepted and configured for the MVP under KAN-64 and KAN-29.
 
-`sandicts.com` ownership is confirmed. `sandicts.com.br` remains provisional
-until its public registration and DNS delegation are confirmed.
-The backend runtime target and real API URLs remain owned by KAN-30.
+Ownership of `sandicts.com` and `sandicts.com.br` is confirmed. Vercel domain
+verification, TLS, Hostinger DNS, the canonical apex, Preview, and production
+redirects are configured. The first workflow-driven deployments and the Render
+API services remain pending; backend implementation and API URLs are owned by
+KAN-30.
 
 ## Decision
 
@@ -62,7 +64,7 @@ Vercel-specific business or authentication logic.
 
 ## Environment Matrix
 
-Proposed custom origins:
+Confirmed frontend origins and reserved API origins:
 
 | Tier | Frontend | API | Browser auth |
 | --- | --- | --- | --- |
@@ -178,13 +180,21 @@ The frontend deployment contract is:
 - Vercel CLI is pinned rather than installed from `latest`
 - Preview receives no production secrets or production data
 
+Protected branches accept only the forward promotion path
+`developer -> staging -> master`. Every promotion PR records its release type,
+exact source SHA, target environment, Jira scope, and rollback plan. Production
+promotion additionally records the stable Preview deployment and validation
+evidence for the same release. Feature, security, and recovery corrections
+enter through a temporary Jira branch targeting `developer`; neither `staging`
+nor `master` is patched directly.
+
 Full browser auth is validated locally and on the stable preview after
 promotion to `staging`.
 
 ## Dependencies
 
 - KAN-29 implements the Vercel project and preview/production settings
-- KAN-30 selects and configures the backend target
+- KAN-30 plans and configures the Render backend target
 - KAN-27 owns stable preview/staging operational configuration
 - KAN-28 owns production operational configuration
 - KAN-125 consumes the final production origin for SEO
@@ -198,13 +208,14 @@ promotion to `staging`.
 - revert custom-domain DNS only when its target changed
 - preserve refresh-cookie name and path during emergency rollback
 - never widen CORS to a wildcard as a recovery measure
+- reconcile every emergency rollback with a Jira-tracked revert or fix through
+  `developer -> staging -> master`
 
 ## Follow-Up Decisions
 
-- confirm that `sandicts.com.br` is active and delegated in public DNS
-- keep `sandicts.com.br` as the canonical apex and `sandicts.com` as redirect
-- record the Vercel project and organization IDs without exposing the token
-- record the API provider, regions, URLs, health checks, and scaling behavior in
-  KAN-30
+- plan and deploy the Preview and Production Render services in KAN-30
+- configure and validate `api.preview.sandicts.com.br` and
+  `api.sandicts.com.br`
+- validate the first workflow-driven Vercel Preview and Production deployments
 - define preview data reset/isolation
 - move backend rate limiting to shared storage before multiple API instances
