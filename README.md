@@ -13,11 +13,12 @@ Use this repository as the single source of truth for:
 - domain glossary
 - cross-app product decisions
 - cross-app deployment, environment, and browser integration decisions
+- cross-repository development workstation onboarding
 - Jira roadmap and issue-writing rules
 - AI routing for shared Sandicts context
 
 Do not put backend-only architecture, frontend-only UX/component rules, secrets,
-or local machine setup here.
+or machine-specific credentials and state here.
 
 ## Local Workspace
 
@@ -33,6 +34,11 @@ sandicts/
 
 Backend and frontend repositories should keep short local AI routers and point
 to this repository only when shared product or business context is needed.
+
+For a new or existing machine that must continue Sandicts development across
+all repositories, follow:
+
+- `docs/engineering/development-workstation-onboarding.md`
 
 ## AI Entry Point
 

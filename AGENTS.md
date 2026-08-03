@@ -25,3 +25,8 @@
 - Keep connector narration minimal.
 - Do not narrate expected fallback attempts.
 - Report only confirmed blockers, permission failures, or decisions that affect the task.
+
+### Development Workstation
+
+- For new-machine or workstation-alignment requests, read `docs/engineering/development-workstation-onboarding.md`.
+- Keep shared setup versioned, but never copy or request credential stores, tokens, local `.env` files, `.vercel`, or the user's global `.codex` directory.
