@@ -36,6 +36,9 @@ of files for the current task.
 | --- | --- |
 | [`docs/product/sandicts-product-context.md`](../product/sandicts-product-context.md) | Product context and core marketplace direction |
 | [`docs/product/sandicts-mvp-scope.md`](../product/sandicts-mvp-scope.md) | Approved MVP scope and explicit exclusions |
+| [`docs/product/sandicts-open-match-model.md`](../product/sandicts-open-match-model.md) | Canonical MVP, V2, and future open-match domain model |
+| [`docs/product/sandicts-open-match-implementation-roadmap.md`](../product/sandicts-open-match-implementation-roadmap.md) | Vertical delivery plan and read-only Jira alignment for Open Matches |
+| [`docs/product/tweener-competitive-analysis.md`](../product/tweener-competitive-analysis.md) | Dated competitor evidence and product lessons behind the open-match model |
 | [`docs/product/sandicts-academy-plan-model.md`](../product/sandicts-academy-plan-model.md) | MVP Academy plan configuration, access, usage, and expiration |
 | [`docs/product/sandicts-player-skill-allocation-model.md`](../product/sandicts-player-skill-allocation-model.md) | V2 level budgets and sport-specific skill allocation without overall |
 | [`docs/business-rules/sandicts-business-rules.md`](../business-rules/sandicts-business-rules.md) | Operational business rules shared by frontend and backend |
@@ -71,6 +74,16 @@ For Academy plans, read:
 1. `docs/product/sandicts-academy-plan-model.md`
 2. `docs/product/sandicts-mvp-scope.md`
 3. `docs/business-rules/sandicts-business-rules.md`
+
+For open matches, read:
+
+1. `docs/product/sandicts-open-match-model.md`
+2. `docs/product/sandicts-mvp-scope.md`
+3. `docs/business-rules/sandicts-business-rules.md`
+4. `docs/product/sandicts-open-match-implementation-roadmap.md` when planning
+   implementation or Jira work
+5. `docs/product/tweener-competitive-analysis.md` only when the research basis
+   or competitor comparison matters
 
 For V2 player skill allocation, read:
 

@@ -6,6 +6,7 @@ priority: medium
 canonical: false
 related:
   - docs/product/sandicts-product-context.md
+  - docs/product/sandicts-open-match-model.md
   - docs/business-rules/sandicts-business-rules.md
 scope: product, mvp, v2, backlog, player-progression, marketplace
 read-when:
@@ -121,24 +122,36 @@ Como marcar:
 
 ## 6. Partidas abertas
 
-| Item                                            | MVP | V2  | Futuro | Descartar | Observacoes                                                |
-| ----------------------------------------------- | --- | --- | ------ | --------- | ---------------------------------------------------------- |
-| Player pode criar partida aberta                | [x] | [ ] | [ ]    | [ ]       | comunidade jogavel desde o MVP                             |
-| Organization pode criar partida aberta               | [ ] | [x] | [ ]    | [ ]       | Organization cria depois; MVP foca player                       |
-| Partida aberta tem esporte                      | [x] | [ ] | [ ]    | [ ]       |                                                            |
-| Partida aberta tem local                        | [x] | [ ] | [ ]    | [ ]       | pode referenciar Organization/quadra ou local textual no inicio |
-| Partida aberta tem data e horario               | [x] | [ ] | [ ]    | [ ]       |                                                            |
-| Partida aberta tem limite de participantes      | [x] | [ ] | [ ]    | [ ]       |                                                            |
-| Partida aberta tem nivel esperado               | [x] | [ ] | [ ]    | [ ]       | nivel simples, nao evolucao completa                       |
-| Player pode entrar em partida aberta            | [x] | [ ] | [ ]    | [ ]       |                                                            |
-| Sistema impede player de entrar duas vezes      | [x] | [ ] | [ ]    | [ ]       | regra critica                                              |
-| Sistema impede entrada se partida estiver cheia | [x] | [ ] | [ ]    | [ ]       | regra critica                                              |
-| Participante pode sair da partida               | [x] | [ ] | [ ]    | [ ]       |                                                            |
-| Criador pode cancelar partida                   | [x] | [ ] | [ ]    | [ ]       |                                                            |
-| Partida tem status open                         | [x] | [ ] | [ ]    | [ ]       |                                                            |
-| Partida tem status full                         | [x] | [ ] | [ ]    | [ ]       |                                                            |
-| Partida tem status canceled                     | [x] | [ ] | [ ]    | [ ]       |                                                            |
-| Partida tem status completed                    | [x] | [ ] | [ ]    | [ ]       |                                                            |
+| Item | MVP | V2 | Futuro | Descartar | Observacoes |
+| --- | --- | --- | --- | --- | --- |
+| Player pode criar partida aberta | [x] | [ ] | [ ] | [ ] | comunidade jogavel desde o MVP |
+| Organization pode criar partida aberta | [ ] | [x] | [ ] | [ ] | MVP foca partida criada por Player |
+| Partida define intencao | [x] | [ ] | [ ] | [ ] | social, competitive ou training |
+| Partida define visibilidade | [x] | [ ] | [ ] | [ ] | public ou invite_only; group fica para V2 |
+| Partida tem esporte, data e horario | [x] | [ ] | [ ] | [ ] | campos obrigatorios |
+| Partida tem limite de participantes | [x] | [ ] | [ ] | [ ] | conta confirmados e convidados |
+| Partida tem politica de nivel simples | [x] | [ ] | [ ] | [ ] | open, similar ou range; nao e nivel verificado |
+| Partida pode referenciar reserva | [x] | [ ] | [ ] | [ ] | herda quadra, esporte e horario |
+| Partida pode usar local manual | [x] | [ ] | [ ] | [ ] | nao prova disponibilidade nem bloqueia quadra |
+| Reserva cancelada ou expirada cancela partida vinculada | [x] | [ ] | [ ] | [ ] | cancelar partida nao cancela reserva |
+| Criador entra confirmado automaticamente | [x] | [ ] | [ ] | [ ] | primeiro participante confirmado |
+| Player pode entrar ou pedir aprovacao | [x] | [ ] | [ ] | [ ] | depende da visibilidade |
+| Sistema impede participacao ativa duplicada | [x] | [ ] | [ ] | [ ] | regra critica |
+| Partida cheia pode ter fila de espera | [x] | [ ] | [ ] | [ ] | regra configuravel ainda em aberto |
+| Criador pode aprovar ou recusar pedido | [x] | [ ] | [ ] | [ ] | necessario para invite_only |
+| Criador pode adicionar convidado sem conta | [x] | [ ] | [ ] | [ ] | nome de exibicao, sem criar User ou Player |
+| Player pode sair e criador pode cancelar | [x] | [ ] | [ ] | [ ] | respeita cutoffs a definir |
+| Partida tem status open, full, canceled e completed | [x] | [ ] | [ ] | [ ] | lifecycle base |
+| Participante tem lifecycle explicito | [x] | [ ] | [ ] | [ ] | requested, confirmed, waitlisted, declined, left, no_show |
+| Partida tem link compartilhavel e WhatsApp/native share | [x] | [ ] | [ ] | [ ] | link nao equivale a convite aceito |
+| Landing publica usa metadados seguros | [x] | [ ] | [ ] | [ ] | autenticacao exigida antes de participar |
+| Atualizacoes operacionais e lembrete pre-jogo | [x] | [ ] | [ ] | [ ] | canal e timing ainda em aberto |
+| Confirmacao pos-jogo e CTA de remarcar/repetir | [x] | [ ] | [ ] | [ ] | sem rating ou ranking no MVP |
+| Sugestao deterministica de Players | [x] | [ ] | [ ] | [ ] | incremento nao bloqueante; opt-in, esporte e nivel simples |
+| Visibilidade por grupo | [ ] | [x] | [ ] | [ ] | depende de grupos de comunidade |
+| Convite direcionado dentro do app | [ ] | [x] | [ ] | [ ] | cria estado invited |
+| Convidado pode reivindicar historico | [ ] | [x] | [ ] | [ ] | exige consentimento explicito |
+| Matchmaking automatico ou IA | [ ] | [ ] | [x] | [ ] | depende de dados e demanda validados |
 
 ## 7. Torneios e eventos
 
@@ -236,10 +249,11 @@ Como marcar:
 | Ranking por torneio             | [ ] | [ ] | [x]    | [ ]       |                                               |
 | Destaque do mes                 | [ ] | [ ] | [x]    | [ ]       |                                               |
 | Conquistas                      | [ ] | [ ] | [x]    | [ ]       |                                               |
-| Notificacoes                    | [ ] | [x] | [ ]    | [ ]       | importante quando reservas/partidas crescerem |
-| Convites para partidas          | [ ] | [x] | [ ]    | [ ]       | depois da partida aberta basica               |
+| Atualizacoes operacionais       | [x] | [ ] | [ ]    | [ ]       | apenas reserva/participacao/cancelamento/lembrete |
+| Central ampla de notificacoes   | [ ] | [x] | [ ]    | [ ]       | alem dos avisos operacionais do MVP            |
+| Convites direcionados para partidas | [ ] | [x] | [ ] | [ ]       | link compartilhado simples entra no MVP        |
 | Chat de partida                 | [ ] | [ ] | [x]    | [ ]       |                                               |
-| Grupo de comunidade por arena   | [ ] | [ ] | [x]    | [ ]       |                                               |
+| Grupo de comunidade por arena   | [ ] | [x] | [ ]    | [ ]       | habilita visibilidade group em V2              |
 
 ## 12. Futuro e experimentos
 

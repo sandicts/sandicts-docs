@@ -7,6 +7,7 @@ canonical: docs/glossary/domain-glossary.md
 related:
   - docs/product/sandicts-product-context.md
   - docs/product/sandicts-mvp-scope.md
+  - docs/product/sandicts-open-match-model.md
   - docs/product/sandicts-academy-plan-model.md
   - docs/product/sandicts-player-skill-allocation-model.md
   - docs/business-rules/sandicts-business-rules.md
@@ -44,7 +45,12 @@ Use these names consistently in docs, Jira, backend, frontend, and AI routing.
 - `Sport`: futevolei, beach tennis, beach volleyball, or similar sand sport.
 - `AvailabilitySlot`: time window made available by an Organization for a court.
 - `Reservation`: booking attempt or confirmed booking for a court slot.
-- `OpenMatch`: player-created or Organization-created game with joinable spots.
+- `OpenMatch`: scheduled game with joinable spots, explicit intent, visibility,
+  place mode, capacity, and lifecycle.
+- `OpenMatchParticipant`: registered Player participation and its lifecycle in
+  one OpenMatch.
+- `OpenMatchGuest`: match-local participant managed by the creator without a
+  Sandicts account or public profile.
 - `Tournament`: Organization-created competition or event.
 - `Payment`: system record of money status for reservations, Academy plan
   access, memberships, and tournaments.

@@ -7,6 +7,8 @@ canonical: docs/product/sandicts-mvp-functional-spec.md
 related:
   - docs/product/sandicts-mvp-scope.md
   - docs/product/sandicts-product-context.md
+  - docs/product/sandicts-open-match-model.md
+  - docs/product/sandicts-open-match-implementation-roadmap.md
   - docs/product/sandicts-academy-plan-model.md
   - docs/business-rules/sandicts-business-rules.md
   - sandicts/reactjs-sandicts-web:docs/frontend/sandicts-frontend-tech-decisions.md
@@ -1741,57 +1743,106 @@ Planos de Academy estao prontos quando:
 
 ### Objetivo Do MVP
 
-Permitir que jogadores criem e entrem em partidas abertas para provar o loop de
-comunidade.
+Permitir que jogadores conectem uma partida a uma reserva real, preencham as
+vagas usando o Sandicts e os grupos que ja possuem e retornem para remarcar.
+
+A fonte de verdade detalhada e
+`docs/product/sandicts-open-match-model.md`.
 
 ### Incluido
 
 - partida aberta criada por jogador
-- esporte
-- local
-- data e hora
+- intencao `social`, `competitive` ou `training`
+- visibilidade `public` ou `invite_only`
+- politica de nivel simples `open`, `similar` ou `range`
+- esporte, data e hora
 - limite de participantes
-- nivel esperado simples
-- entrar na partida
-- sair da partida
+- local vinculado a uma reserva Sandicts ou local manual
+- entrada imediata em partida publica com vaga
+- pedido de aprovacao em partida `invite_only`
+- fila de espera quando habilitada
+- participante registrado pode sair
+- criador pode aprovar, recusar ou remover quando a politica permitir
+- convidado sem conta gerenciado pelo criador
+- link estavel, copiar link e compartilhamento nativo/WhatsApp
+- landing page com dados seguros e retorno a partida depois do login
+- atualizacoes operacionais essenciais e lembrete pre-jogo
 - criador cancelar partida
+- confirmacao leve de realizacao e acoes de remarcar/repetir
 - estados aberta/cheia/cancelada/concluida
+- sugestao deterministica de Players como incremento nao bloqueante depois do
+  fluxo principal
 
 ### Fora Do Escopo
 
 - partidas abertas criadas por Organization
-- convites
+- convite direcionado dentro do app
+- importacao de contatos ou integracao com API do WhatsApp
+- visibilidade por grupo
+- reivindicacao de convidado por uma conta
 - chat
 - matchmaking automatico
 - rankings
 - recompensas
+- rating ou reputacao publica
+- recomendacao por IA
 
 ### Fluxo No Frontend
 
 Criar partida:
 
 1. jogador abre criacao de partida aberta
-2. jogador escolhe esporte
-3. jogador escolhe local
-4. jogador escolhe data e hora
-5. jogador define limite de participantes
-6. jogador define nivel esperado
-7. app cria partida
-8. jogador ve detalhe da partida
+2. jogador escolhe intencao e visibilidade
+3. jogador escolhe uma reserva propria ou informa um local manual
+4. no modo reserva, app herda esporte, quadra, data e horario
+5. no modo manual, jogador informa esporte, local, data e horario
+6. jogador define capacidade e politica de nivel
+7. jogador decide se habilita fila de espera, se configuravel
+8. app cria a partida com o criador confirmado
+9. jogador ve detalhe e pode compartilhar o link
 
-Entrar em partida:
+Entrar em partida publica:
 
 1. jogador abre lista de partidas abertas
-2. jogador filtra por esporte ou nivel, se disponivel
+2. jogador filtra por esporte, intencao ou nivel, se disponivel
 3. jogador abre detalhe da partida
-4. jogador entra na partida
-5. app atualiza quantidade de participantes
-6. se limite for atingido, partida vira cheia
+4. app autentica o jogador sem perder o destino, se necessario
+5. jogador entra como confirmado enquanto existe vaga
+6. se estiver cheia e a fila estiver ativa, jogador entra como `waitlisted`
+7. app atualiza quantidade de confirmados e vagas restantes
+
+Pedir entrada por link `invite_only`:
+
+1. jogador abre link compartilhado
+2. landing mostra apenas dados seguros e o estado atual
+3. app autentica o jogador sem perder o destino, se necessario
+4. jogador envia pedido e fica `requested`
+5. criador confirma ou recusa
+6. confirmacao ocupa vaga e pode deixar a partida `full`
+
+Gerenciar convidado sem conta:
+
+1. criador informa somente um nome de exibicao
+2. convidado entra confirmado e ocupa uma vaga
+3. apenas o criador pode editar ou remover o convidado
+4. sistema nao cria `User`, `Player`, perfil, rating ou historico publico
 
 Sair/cancelar:
 
-- participante pode sair se partida ainda estiver aberta e politica permitir
+- participante pode sair antes do cutoff definido
+- criador nao pode sair da partida ativa; sem transferencia de ownership no MVP,
+  deve cancelar
+- criador pode remover participante antes do cutoff definido
 - criador pode cancelar a partida
+- cancelar partida nao cancela a reserva
+- reserva vinculada cancelada ou expirada antes do jogo cancela a partida
+
+Concluir:
+
+1. depois do horario, criador recebe uma confirmacao leve
+2. criador informa se a partida aconteceu e pode registrar `no_show` conforme a
+   politica ainda a definir
+3. detalhe concluido oferece remarcar a quadra ou criar partida semelhante
 
 Estados do frontend:
 
@@ -1799,9 +1850,16 @@ Estados do frontend:
 - cheia
 - cancelada
 - concluida
-- ja entrou
+- aguardando aprovacao
+- confirmado
+- na fila de espera
+- recusado
+- saiu ou foi removido
+- no-show
 - entrada bloqueada
 - saida bloqueada
+- reserva aguardando pagamento/confirmacao
+- local manual sem confirmacao de disponibilidade
 
 ### Comportamento No Backend
 
@@ -1810,13 +1868,26 @@ Backend deve:
 - criar partida aberta para jogador autenticado
 - listar partidas abertas
 - ler detalhe de partida
-- permitir entrada de participante
+- validar reserva, ownership e compatibilidade quando houver vinculo
+- impedir mais de uma partida ativa para a mesma reserva
+- herdar esporte, quadra e horario da reserva
+- permitir confirmacao direta em partida publica com vaga
+- criar pedido em partida `invite_only`
+- permitir criador confirmar ou recusar pedido
+- permitir fila de espera quando a partida estiver cheia e a fila estiver ativa
 - permitir saida de participante
-- impedir entrada duplicada
-- impedir entrada quando cheia
+- permitir criador gerenciar convidado sem conta
+- impedir participacao ativa duplicada
+- impedir confirmacao acima da capacidade
 - impedir entrada quando cancelada ou concluida
 - atualizar status para cheia quando limite for atingido
+- reabrir quando uma vaga confirmada for liberada
+- promover fila de espera conforme politica definida
+- cancelar a partida se a reserva for cancelada ou expirar antes do jogo
+- publicar link estavel e metadados seguros sem efeitos colaterais no `GET`
+- emitir eventos para atualizacoes operacionais e metricas
 - permitir criador cancelar
+- concluir conforme politica e preservar historico
 
 ### Conceitos De Dados
 
@@ -1824,24 +1895,48 @@ Principais:
 
 - `OpenMatch`
 - `OpenMatchParticipant`
+- `OpenMatchGuest`
 
-Campos recomendados:
+Campos recomendados de `OpenMatch`:
 
 - creator/player id
 - sport id
-- tipo/referencia de local ou texto livre
-- data
-- hora inicial
-- hora final, se o produto escolher
-- limite de participantes
-- nivel esperado
+- intent
+- visibility
+- level policy e intervalo opcional
+- place mode
+- reservation id ou campos de local manual
+- start/end date-time
+- participant capacity
+- waitlist enabled
 - status
+- public share identifier/slug
 - timestamps
 
-Decisao aberta:
+Campos recomendados de participante registrado:
 
-- se local da partida no MVP e referencia a Organization/quadra, texto livre ou os
-  dois.
+- match id
+- player id
+- status
+- requested/confirmed/left/no-show timestamps
+
+Campos recomendados de convidado:
+
+- match id
+- display name
+- status confirmado/removido/no-show
+- managed-by creator id
+
+Decisoes abertas antes da implementacao:
+
+- cutoffs de saida, remocao e cancelamento
+- autoridade e contestacao de `no_show`
+- fila sempre ativa ou configuravel pelo criador
+- canais e horarios dos avisos
+- indexacao publica/unlisted e campos de preview
+- responsabilidade por custo e futura divisao de pagamento
+- politica de conclusao da partida
+- opt-in de descoberta para sugestoes simples
 
 ### Rascunho De API
 
@@ -1850,17 +1945,32 @@ Possiveis endpoints:
 - `GET /open-matches`
 - `POST /open-matches`
 - `GET /open-matches/:matchId`
-- `POST /open-matches/:matchId/participants`
+- `POST /open-matches/:matchId/participations`
 - `DELETE /open-matches/:matchId/participants/me`
+- `PATCH /open-matches/:matchId/participants/:participantId`
+- `POST /open-matches/:matchId/guests`
+- `PATCH /open-matches/:matchId/guests/:guestId`
+- `DELETE /open-matches/:matchId/guests/:guestId`
 - `PATCH /open-matches/:matchId/cancel`
+- `PATCH /open-matches/:matchId/complete`
+- `GET /open-matches/:matchId/suggestions`
 
 ### Regras De Negocio
 
-- jogador nao pode entrar duas vezes na mesma partida
-- jogador nao pode entrar em partida cheia
+- criador e o primeiro participante confirmado
+- jogador nao pode ter participacao ativa duplicada
+- apenas confirmados e convidados confirmados ocupam capacidade
+- partida publica cheia usa fila quando habilitada; caso contrario bloqueia
+- partida `invite_only` exige aprovacao do criador
 - jogador nao pode entrar em partida cancelada ou concluida
 - partida expoe vagas totais, participantes confirmados e vagas restantes
 - nivel esperado e filtro/expectativa, nao prova verificada de habilidade
+- local manual nao bloqueia agenda nem prova disponibilidade
+- campos derivados da reserva nao podem divergir
+- cancelar partida nao cancela reserva
+- cancelar ou expirar reserva antes do jogo cancela partida vinculada
+- convidado nao cria conta ou perfil implicitamente
+- leitura de landing/preview nao altera participacao
 - criador pode cancelar a propria partida
 
 ### Necessidades Para Figma
@@ -1868,26 +1978,36 @@ Possiveis endpoints:
 Telas/componentes:
 
 - lista de partidas abertas
-- filtros de partida aberta
+- filtros por esporte, intencao e nivel simples
 - detalhe de partida aberta
-- formulario de criacao
-- exibicao de participantes/vagas
-- acao de entrar
+- criacao em passos com intencao, visibilidade, local e capacidade
+- selecao entre reserva e local manual
+- exibicao de participantes, pedidos, fila, convidados e vagas
+- acao de entrar ou pedir participacao
 - acao de sair
 - acao de cancelar
+- gestao de pedidos e convidados pelo criador
+- compartilhar/copiar link/WhatsApp
+- landing publica e retorno depois do login
+- estados da reserva vinculada
+- confirmacao pos-jogo e acoes de remarcar/repetir
 - badges cheia/cancelada/concluida
-- erro de entrada duplicada
+- erros de duplicidade, capacidade, autorizacao e cutoff
 
 ### Gate De Integracao
 
 Partidas abertas estao prontas quando:
 
-- jogador consegue criar partida
-- outro jogador consegue entrar
-- entrada duplicada e bloqueada
-- partida cheia bloqueia novas entradas
-- participante consegue sair
-- criador consegue cancelar
+- jogador cria partida vinculada a reserva e com local manual
+- campos da reserva permanecem sincronizados e cancelamento/expiracao propaga
+- outro jogador entra em partida publica ou pede aprovacao em `invite_only`
+- duplicidade e excesso de capacidade sao bloqueados
+- fila e liberacao de vaga funcionam conforme a politica escolhida
+- criador gerencia pedidos e convidado sem conta
+- participante sai e criador cancela conforme cutoffs
+- link compartilhado preserva privacidade e retorna ao fluxo depois do login
+- avisos operacionais essenciais e conclusao/remarcar funcionam
+- metricas principais sao registradas
 
 ## Modulo 12: Preparacao Para Lancamento
 
