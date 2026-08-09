@@ -6,6 +6,7 @@ priority: medium
 canonical: docs/product/sandicts-v2-backlog.md
 related:
   - docs/product/sandicts-mvp-scope.md
+  - docs/product/sandicts-open-match-model.md
   - docs/product/sandicts-player-skill-allocation-model.md
   - docs/product/sandicts-academy-plan-model.md
   - docs/product/sandicts-scope-checklist.md
@@ -198,21 +199,32 @@ Future after V2:
 V2 scope:
 
 - Organization can create open match
-- notifications
-- invites to matches
+- community groups and group-only match visibility
+- directed in-app invitations with an explicit `invited` participant state
+- guest-record claiming with explicit account-owner consent
+- calendar subscription and richer availability preferences
+- geolocation-aware match discovery and player suggestions
+- broad notification center beyond the MVP operational updates
+- richer profiles per sport and verified assessment signals
+- narrow match ratings, reputation signals, and carefully scoped badges
+- optional coach or Academy-class association using the existing Academy model
 
 Future after V2:
 
 - chat
-- arena/community groups
+- activity feed and broad social graph
+- rankings, leaderboards, challenges, and public competitive history
 - automatic matchmaking
+- AI coach, scouting, or training recommendations
+- wearable integrations
+- news or media feed
 
 ## Future Backlog
 
 Future ideas:
 
 - Admin App when there is a real operational need
-- reviews and ratings
+- broad public reviews and rating systems beyond the narrow V2 match signals
 - social follow/friends/feed
 - local, sport, arena, and tournament rankings
 - monthly highlights

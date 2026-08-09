@@ -7,12 +7,13 @@ canonical: docs/business-rules/sandicts-business-rules.md
 related:
   - docs/product/sandicts-product-context.md
   - docs/product/sandicts-mvp-scope.md
+  - docs/product/sandicts-open-match-model.md
   - docs/product/sandicts-academy-plan-model.md
   - docs/product/sandicts-player-skill-allocation-model.md
   - docs/product/sandicts-v2-backlog.md
   - docs/decisions/shared-documentation-strategy.md
-  - docs/ai/api/error-handling-foundation.md
-  - docs/ai/api/zod-swagger-foundation.md
+  - sandicts/nodejs-sandicts-api:docs/ai/api/error-handling-foundation.md
+  - sandicts/nodejs-sandicts-api:docs/ai/api/zod-swagger-foundation.md
 scope: business-rules, backend, marketplace, reservations, matches, payments, player-evolution
 read-when:
   - implementing Sandicts domain modules
@@ -54,7 +55,10 @@ Recommended first-pass domain vocabulary:
 - `Sport`: futevolei, beach tennis, beach volleyball, or similar
 - `AvailabilitySlot`: time window made available by an Organization
 - `Reservation`: booking attempt or confirmed booking for a court slot
-- `OpenMatch`: player-created or Organization-created game with joinable spots
+- `OpenMatch`: scheduled game with joinable spots and an explicit lifecycle
+- `OpenMatchParticipant`: registered Player participation and its lifecycle
+- `OpenMatchGuest`: match-local participant managed by the creator without a
+  Sandicts account
 - `Tournament`: Organization-created competition or event
 - `Payment`: system record of money status for reservations, Academy plan access, memberships, and tournaments
 - `Membership`: recurring relationship between player and Organization or academy
@@ -132,13 +136,35 @@ Business failures that should usually become `business_rule_violation`:
 
 ## Open Matches
 
+The detailed domain model and MVP/post-MVP boundary are defined in
+`docs/product/sandicts-open-match-model.md`.
+
 Rules:
 
-- users can create open matches for a sport, place, date, time, and level range
-- users can join an existing match until the participant limit is reached
+- a player-created match must define intent, visibility, sport, date-time,
+  capacity, place mode, and simple-level policy
+- place mode is exactly one of a creator-controlled Sandicts reservation or a
+  manual place that does not prove availability
+- reservation-linked sport, court, and schedule are inherited and cannot drift
+- only one active open match may reference the same reservation
+- canceling or expiring the linked reservation before play cancels the match;
+  canceling the match does not cancel the reservation
 - an open match must expose total spots, confirmed participants, and remaining spots
-- a player cannot join the same open match twice
+- the creator is the first confirmed participant
+- the creator cannot leave an active match; the MVP requires cancellation
+  because it has no ownership-transfer flow
+- only confirmed registered players and confirmed guests consume capacity
+- a registered player cannot have duplicate active participation in a match
+- public participation confirms immediately while capacity exists and may enter
+  a waitlist when the match is full
+- invite-only participation starts as a creator approval request
+- a creator may manage a display-name-only guest without creating a `User` or
+  `Player`
+- a stable shared link may expose privacy-safe match data, but joining requires
+  authentication and crawler requests cannot mutate participation
 - match level should be treated as a filter and expectation, not as hard identity proof in the MVP
+- essential participation, cancellation, reservation, reminder, and completion
+  updates belong to the operational MVP; broad social notifications do not
 
 Recommended open match statuses:
 
@@ -149,10 +175,17 @@ Recommended open match statuses:
 
 Business failures:
 
-- joining a full match
+- joining a full match when waitlist is disabled
 - joining a canceled or completed match
-- joining twice
-- creating a match for a court/time that cannot be used
+- creating duplicate active participation
+- confirming a participant or guest beyond capacity
+- linking an incompatible or already-used reservation
+- mutating reservation-derived court or schedule fields
+- performing participation changes after the applicable cutoff
+
+Accessing a missing reservation should become `resource_not_found`. Referencing
+another player's reservation or performing creator-only actions should become
+`forbidden`.
 
 ## Payments And Delinquency
 

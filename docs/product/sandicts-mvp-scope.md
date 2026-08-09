@@ -6,6 +6,8 @@ priority: high
 canonical: docs/product/sandicts-mvp-scope.md
 related:
   - docs/product/sandicts-product-context.md
+  - docs/product/sandicts-open-match-model.md
+  - docs/product/sandicts-open-match-implementation-roadmap.md
   - docs/product/sandicts-academy-plan-model.md
   - docs/product/sandicts-scope-checklist.md
   - docs/product/sandicts-v2-backlog.md
@@ -41,7 +43,8 @@ The MVP should prove the marketplace and playable community core:
 - organizations can manage availability and reservation state
 - academies can create configurable plans and manually control Player access
 - payments can be tracked manually
-- players can create and join open matches
+- players can create, share, fill, and complete open matches connected to the
+  reservation loop
 
 The MVP must stay focused. It intentionally excludes:
 
@@ -254,17 +257,32 @@ Rules:
 
 ## MVP Open Matches
 
-Included:
+The detailed source of truth is
+`docs/product/sandicts-open-match-model.md`.
 
-- player creates open match
-- open match has sport
-- open match has place
-- open match has date and time
-- open match has participant limit
-- open match has expected simple level
-- player joins open match
-- participant leaves open match
-- creator cancels open match
+Included core:
+
+- player-created match with `social`, `competitive`, or `training` intent
+- `public` or `invite_only` visibility
+- `open`, `similar`, or `range` simple-level policy
+- sport, date-time, participant capacity, and creator as first confirmed player
+- place linked to a Sandicts reservation or stored as a manual place
+- reservation schedule/court synchronization and automatic match cancellation
+  when the linked reservation expires or is canceled before play
+- registered participant request, confirmation, waitlist, decline, leave, and
+  no-show lifecycle
+- creator approval for invite-only participation
+- organizer-managed guest spots without silently creating accounts
+- stable shared URL, privacy-safe landing page, copy link, and WhatsApp/native
+  sharing
+- essential participation, cancellation, reservation, and pre-match updates
+- lightweight completion confirmation with rebook/rematch actions
+
+Optional MVP increment after the core flow:
+
+- deterministic player suggestions based on discoverability opt-in, sport, and
+  compatible simple level; no AI, automatic enrollment, or precise live
+  location
 
 Open match statuses:
 
@@ -275,19 +293,25 @@ Open match statuses:
 
 Rules:
 
-- a player cannot join the same open match twice
-- a player cannot join a full match
+- a player cannot have duplicate active participation in the same match
+- only confirmed registered players and guests consume capacity
+- a full public match may place the player on a waitlist when enabled
+- an invite-only link creates an approval request, not an accepted invitation
 - a player cannot join a canceled or completed match
 - match level is an expectation/filter, not a verified athlete identity proof
-- open match place may start as an Organization/court reference or a simple
-  place field; exact MVP representation remains a modeling decision
+- a manual place does not prove availability or block court inventory
+- canceling a match does not cancel its linked reservation
 
 Not in MVP:
 
 - Organization-created open matches
-- invitations
+- direct in-app invitations and contact import
+- community groups and group-only matches
+- guest-profile claiming
 - chat
 - automatic matchmaking
+- rankings, ratings, achievements, and public reputation
+- AI recommendations
 
 ## MVP B2B Management
 
@@ -325,14 +349,16 @@ These are confirmed out of MVP:
 - full academy management
 - payment gateway
 - Organization-created open matches
-- notifications and match invites
+- broad notification center, social notifications, and directed match invites
+- community groups and group-only matches
+- guest-profile claiming
 
 ## Explicitly Future
 
 These are later than V2 unless product direction changes:
 
 - Admin App beyond operational need
-- reviews
+- broad public reviews beyond a narrow V2 match-reputation experiment
 - split and Organization/academy payout automation
 - tournament brackets, results, and rankings
 - social following/friends/feed

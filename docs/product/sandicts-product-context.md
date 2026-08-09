@@ -7,11 +7,12 @@ canonical: docs/product/sandicts-product-context.md
 related:
   - docs/business-rules/sandicts-business-rules.md
   - docs/product/sandicts-mvp-scope.md
+  - docs/product/sandicts-open-match-model.md
   - docs/product/sandicts-academy-plan-model.md
   - docs/product/sandicts-player-skill-allocation-model.md
   - docs/product/sandicts-v2-backlog.md
   - docs/decisions/shared-documentation-strategy.md
-  - docs/ai/api/zod-swagger-foundation.md
+  - sandicts/nodejs-sandicts-api:docs/ai/api/zod-swagger-foundation.md
 scope: product, marketplace, sports, sand-courts, mvp
 read-when:
   - defining Sandicts features or modules
@@ -142,11 +143,16 @@ Admins are internal Sandicts operators and should be introduced only when a real
 - keep Organization availability as the source of truth
 - reflect payment and reservation status in the system
 
-### Player Matchmaking
+### Open-Match Coordination
 
-- create open matches
-- join existing matches until capacity is reached
-- support sport, level, location, date, and time matching
+- connect a player-created match to a real Sandicts reservation or a manual
+  place
+- describe intent, visibility, sport, simple level, date-time, and capacity
+- fill spots through public discovery, shared links, waitlists, and
+  organizer-managed guests
+- preserve operational participant states through completion and rebooking
+- add automatic matchmaking only after the reservation-backed community loop is
+  validated
 
 ### Tournaments
 
@@ -192,6 +198,8 @@ Open billing decision:
 Use these documents to decide what belongs in each delivery stage:
 
 - [`docs/product/sandicts-mvp-scope.md`](sandicts-mvp-scope.md): current MVP source of truth
+- [`docs/product/sandicts-open-match-model.md`](sandicts-open-match-model.md):
+  open-match domain, lifecycle, MVP increments, and future boundaries
 - [`docs/product/sandicts-v2-backlog.md`](sandicts-v2-backlog.md): V2 and later product themes
 - [`docs/product/sandicts-scope-checklist.md`](sandicts-scope-checklist.md): editable working checklist used to discuss scope
 - [`docs/decisions/shared-documentation-strategy.md`](../decisions/shared-documentation-strategy.md): decision about where shared product and business documentation should live
@@ -231,7 +239,8 @@ Prefer a useful, shippable marketplace core:
 5. court discovery by sport, availability, price, and Organization profile
 6. reservation request and confirmation
 7. Academy plan catalog and manual Player access control
-8. open match creation and joining
+8. reservation-backed open-match creation, sharing, participation, and
+   completion
 9. basic manual payment status tracking
 
 Avoid early overengineering:
