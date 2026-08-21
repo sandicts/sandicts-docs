@@ -1,0 +1,20 @@
+#!/bin/sh
+
+pattern='^(feature|fix|hotfix|docs|refactor|test|ci|chore|rc|codex)/KAN-[0-9]+-[a-z0-9]+(-[a-z0-9]+)*$'
+
+while read -r local_ref _ _ _; do
+  case "$local_ref" in
+    refs/heads/*)
+      branch="${local_ref#refs/heads/}"
+      case "$branch" in
+        developer|staging|master) ;;
+        *)
+          printf '%s\n' "$branch" | grep -Eq "$pattern" || {
+            echo "Push blocked: invalid Sandicts branch '$branch'."
+            exit 1
+          }
+          ;;
+      esac
+      ;;
+  esac
+done

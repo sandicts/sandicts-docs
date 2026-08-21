@@ -144,6 +144,22 @@ Open the `apps` directory in Codex so the three sibling repositories are
 available in the same workspace. Trust only the repositories whose remotes and
 contents were verified.
 
+### Install The Versioned Workspace Settings
+
+The canonical shared VS Code settings and Git pre-push hook are versioned in
+`sandicts-docs/tooling/workspace`. After cloning all three sibling repositories,
+run the installer from the `apps` directory in PowerShell:
+
+```powershell
+& .\sandicts-docs\tooling\workspace\install-workspace-config.ps1 -AppsRoot (Get-Location)
+```
+
+The installer copies the VS Code settings and hook into the multi-repository
+workspace root, then configures each repository to use the hook at its resolved
+path on that machine. Re-run it after the versioned settings or hook changes.
+It does not read or copy credentials, environment files, Vercel state, or Codex
+global state.
+
 ## 3. Configure The Backend
 
 The backend requirements are Node.js 24, npm 11, Docker, and Docker Compose.
